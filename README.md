@@ -6,4 +6,7 @@
 3. g++ lex.yy.c y.tab.c 
 4. ./a.out
 
-flex lexicalAnalyzer.l yacc -d syntaxAnalyzer.y g++ lex.yy.c y.tab.c ./a.out
+flex lexicalAnalyzer.l
+yacc -d syntaxAnalyzer.y
+g++ lex.yy.c y.tab.c 
+./a.out
