@@ -41,14 +41,18 @@
 "switch" {return SWITCH;}
 "return" {return RETURN;}
 
-([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {return floatType;}
-[0-9]+ {return intType;}
-(\".*\")|(\'.*\') {return stringType;}
-"false"|"true" {return boolType;}
+.*(\.{2,}).* {printf("invalid sequence\n");} //invalid float number
 
-[a-zA-Z\_][0-9a-zA-Z\_]* {return Identifiers;} // Identifiers
+([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval = atof(yytext); return floatType;}
+[0-9]+ {yylval = atoi(yytext); return intType;}
+(\".*(\"|\\)\")|(\'.*\') {printf("invalid sequence\n");}
+(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval = yytext; return stringType;}
+"false" {yylval = atoi("0"); return boolType;}
+"true" {yylval = atoi("1"); return boolType;}
 
-[\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //@TODO complete the invalid characters
+[a-zA-Z\_][0-9a-zA-Z\_]* {yylval = yytext;return Identifiers;} // Identifiers
+
+[\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
 %%
 /*
