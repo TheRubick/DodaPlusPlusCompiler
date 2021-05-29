@@ -39,6 +39,7 @@
 %token FLOAT
 %token BOOL
 %token STRING
+%token VOID
 %token Constant // 5leha klma wa7da bs
 //RELATIONAL 
 %token EQUAL
@@ -73,7 +74,7 @@
 //Precedence
 // ref: https://en.cppreference.com/w/c/language/operator_precedence
 
-%right '='
+%right '=' //
 %left OR
 %left AND
 %left NOT_EQUAL EQUAL
@@ -81,33 +82,145 @@
 %left '-' '+'
 %left '*' '/' '%'
 %left '^'
-%right NOT
+%right NOT //hights precedence
+
+%start program 
 /*
-%nonassoc   IF_UNMAT
-%nonassoc   ELSE
-
-( )	
-*, /, %	
-+, -	
->, >=, <, <=	relational
-==, !=	relational
-=, *=, /=, %=, +=, -=
+while stm
+do while stm
+for stm
+if stm
+esle stm
+block stmt
+fucn stmt
+func call
+return
+switch
+case
+default
+math expr
+boolean expr
+declare var and const
 */
-
-
 %%
 
-program:
-        program expr '\n'         { printf("%d\n", $2); }
-        | 
+program:                     {;}
+        | statments         { printf("%d\n", $2); } 
         ;
 
-expr:
-        INTEGER
-        | expr '+' expr           { $$ = $1 + $3; }
-        | expr '-' expr           { $$ = $1 - $3; }
+statments: statment                 {;}
+        |  statments statment       {;}
+        |  block_statment           {;}
+        |  statments block_statment {;}
         ;
 
+block_statment: '{' '}'  {;}
+              |  '{' statments '}'  {;}
+              ;
+statment:   ';' {;}
+        |   while_statment {;}
+        |   if_statment    {;}
+        |   for_statment   {;}
+        |   do_while_statment ';' {;}
+        |   switch_statment  {;}
+        |   func_defintion_statment  {;}
+        |   var_declare_statment ';' {;}
+        |   expression_statment ';' {;}
+        ;
+
+while_statment: WHILE '(' expression_statment ')' block_statment  {;}
+            ;
+
+if_statment: matched_if  {;}
+           | unmatched_if {;}
+            ;
+
+matched_if: IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' matched_if '}' {;}
+          | statments  {;}
+          ;
+
+unmatched_if: IF '(' expression_statment ')' block_statment {;}
+            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {;}
+            ;
+
+for_statment: FOR '(' for_begining ';' expression_statment ';' expression_statment ')' block_statment {;}
+            ;
+for_begining: expression_statment {;}
+            | var_declare_statment {;}
+            ;
+
+do_while_statment: DO block_statment WHILE '(' expression_statment ')' {;}
+                 ;
+
+switch_statment: SWITCH '(' Identifiers ')' cases_statment {;}
+               ;
+
+case_statment: CASE intType ':' statments {;}
+             | CASE intType ':' statments BREAK ';' {;}
+             ;
+// force default statment
+cases_statment: DEFAULT ':' statments {;}
+              | case_statment cases_statment {;}
+              ;
+
+func_defintion_statment: FUNC VOID Identifiers '(' arguments ')' block_statment {;}
+                       | FUNC data_type Identifiers '(' arguments ')' func_return_statments {;}
+                       ;
+
+return_statment:  RETURN expression_statment  {;}
+               ;
+
+func_return_statments: '{' return_statment '}' {;}
+                     |  '{' statments  return_statment '}' {;}
+                     ;
+
+data_type: INT {;}
+         | FLOAT {;} 
+         | BOOL {;}
+         | STRING {;}
+         ;
+
+arguments: {;}
+         | Identifiers {;} // test this
+         | arguments Identifiers {;} //could be more than one in identifire check
+         ;
+
+func_call_statment: Identifiers '(' arguments ')' ';' {;}
+                  ;
+
+var_declare_statment: data_type Identifiers  {;}
+                    | data_type Identifiers '=' expression_statment  {;}
+                    | Constant data_type Identifiers '=' expression_statment  {;}
+                    ;
+value: intType {;}
+     | floatType {;}
+     | boolType {;}
+     | stringType {;}   
+     ;
+
+ expression_statment: '(' expression_statment ')'  {;} 
+                    | Identifiers {;}
+                    | value {;}
+                    | func_call_statment {;}
+                    | expression_statment_lv0 {;}
+                    ;             
+expression_statment_lv0: expression_statment '=' expression_statment {;}
+                   | expression_statment '+' expression_statment_lv0 {;}
+                   | expression_statment '-' expression_statment {;}
+                   | expression_statment '*' expression_statment {;}
+                   | expression_statment '/' expression_statment {;}
+                   | expression_statment '%' expression_statment {;}
+                   | expression_statment '^' expression_statment {;}
+                   | expression_statment AND expression_statment {;}
+                   | expression_statment OR expression_statment {;}
+                   | expression_statment GREATER_THAN expression_statment {;}
+                   | expression_statment GREATER_EQUAL expression_statment {;}
+                   | expression_statment LESS_THAN expression_statment {;}
+                   | expression_statment LESS_EQUAL expression_statment {;}
+                   | expression_statment EQUAL expression_statment {;}
+                   | expression_statment NOT_EQUAL expression_statment {;}
+                   | NOT expression_statment {;}
+                   ;
 %%
 
 void yyerror(char *s) {
