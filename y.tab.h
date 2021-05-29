@@ -79,7 +79,8 @@ extern int yydebug;
     floatType = 285,
     intType = 286,
     stringType = 287,
-    boolType = 288
+    boolType = 288,
+    ifpred = 289
   };
 #endif
 /* Tokens.  */
@@ -114,6 +115,7 @@ extern int yydebug;
 #define intType 286
 #define stringType 287
 #define boolType 288
+#define ifpred 289
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -126,7 +128,7 @@ union YYSTYPE
     bool boolVal;
     char* stringVal;
 
-#line 130 "y.tab.h"
+#line 132 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
