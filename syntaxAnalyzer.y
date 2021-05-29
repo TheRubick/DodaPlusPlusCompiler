@@ -4,8 +4,8 @@
     void yyerror(char *);
 %}
 
-%token Identifiers
-%token Variable
+%token Variables
+%token dataTypes
 %token Constant
 %token MathExps
 %token relationalExps
