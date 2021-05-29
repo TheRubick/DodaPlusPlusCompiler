@@ -191,7 +191,7 @@ value: intType {;}
                     | expression_statment_lv0 {;}
                     ;             
 expression_statment_lv0: expression_statment '=' expression_statment {;}
-                   | expression_statment '+' expression_statment_lv0 {;}
+                   | expression_statment '+' expression_statment {;}
                    | expression_statment '-' expression_statment {;}
                    | expression_statment '*' expression_statment {;}
                    | expression_statment '/' expression_statment {;}
