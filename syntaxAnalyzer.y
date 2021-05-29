@@ -140,8 +140,7 @@ do_while_statment: DO block_statment WHILE '(' expression_statment ')' {;}
 switch_statment: SWITCH '(' Identifiers ')' cases_statment  {;}
                ;
 
-case_statment: CASE intType ':' statment  {;}
-             | CASE intType ':' statment BREAK ';' {;}
+case_statment: CASE intType ':' statment BREAK ';' {;}
              ;
 // force default statment
 cases_statment: DEFAULT ':' statment {;}
