@@ -151,7 +151,7 @@ func_defintion_statment: FUNC VOID Identifiers '(' arguments ')' block_statment 
                        | FUNC data_type Identifiers '(' arguments ')' func_return_statments {;}
                        ;
 
-return_statment:  RETURN expression_statment  {;}
+return_statment:  RETURN expression_statment ';'  {;}
                ;
 
 func_return_statments: '{' return_statment '}' {;}
@@ -165,8 +165,10 @@ data_type: INT {;}
          ;
 
 arguments: {;}
-         | Identifiers {;} // test this
-         | arguments Identifiers {;} //could be more than one in identifire check
+         | data_type Identifiers {;}
+         | expression_statment {;} // test this
+         | arguments ',' expression_statment {;} //could be more than one in identifire check
+         | arguments ',' data_type Identifiers {;}
          ;
 
 func_call_statment: Identifiers '(' arguments ')' ';' {;}

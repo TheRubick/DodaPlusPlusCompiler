@@ -9,10 +9,10 @@
 "Const" {return Constant;}
 
 "int"          {printf("Integeeer\n");return INT;}
-"Float"        {return FLOAT;}
-"Bool"         {return BOOL;}
-"String"       {return STRING;}
-"Void"         {return VOID;}
+"float"        {return FLOAT;}
+"bool"         {return BOOL;}
+"string"       {return STRING;}
+"void"         {return VOID;}
 
 [\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {printf("yaraaab"); return yytext[0];}
 
