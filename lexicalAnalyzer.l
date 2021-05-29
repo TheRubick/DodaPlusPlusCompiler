@@ -6,7 +6,7 @@
 
 %%
 
-"Const" {return Constant;}
+"const" {return Constant;}
 
 "int"          {printf("Integeeer\n");return INT;}
 "float"        {return FLOAT;}
@@ -41,11 +41,11 @@
 "switch" {return SWITCH;}
 "return" {return RETURN;}
 
-.*(\.{2,}).* {printf("invalid sequence\n");} //invalid float number
+.*(\.{2,}).* {yyerror("invalid sequence\n");} //invalid float number
 
 ([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval.floatVal = atof(yytext); return floatType;}
 [0-9]+ {yylval.intVal = atoi(yytext); return intType;}
-(\".*(\"|\\)\")|(\'.*\') {printf("invalid sequence\n");}
+(\".*\".*\")|(\".*\\\")|(\'.*\') {yyerror("invalid sequence\n");}
 (\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval.stringVal = yytext; return stringType;}
 "false" {yylval.boolVal = false; return boolType;}
 "true" {yylval.boolVal = true; return boolType;}
