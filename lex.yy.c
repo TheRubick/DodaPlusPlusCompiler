@@ -891,7 +891,7 @@ YY_RULE_SETUP
 case 7:
 YY_RULE_SETUP
 #line 17 "lexicalAnalyzer.l"
-{printf("yaraaab"); return yytext[0];}
+{ return yytext[0];}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP

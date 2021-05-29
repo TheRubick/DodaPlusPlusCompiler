@@ -171,7 +171,7 @@ arguments: {;}
          | arguments ',' data_type Identifiers {;}
          ;
 
-func_call_statment: Identifiers '(' arguments ')' ';' {;}
+func_call_statment: Identifiers '(' arguments ')' {;}
                   ;
 
 var_declare_statment: data_type Identifiers  {printf("var_declare");}
@@ -185,12 +185,12 @@ value: intType {;}
      ;
 
  expression_statment: '(' expression_statment ')'  {;} 
-                    | Identifiers {;}
+                    | Identifiers {printf("identifier found\n");}
                     | value {;}
-                    | func_call_statment {;}
+                    | func_call_statment {printf("func call\n");}
                     | expression_statment_lv0 {;}
                     ;             
-expression_statment_lv0: expression_statment '=' expression_statment {;}
+expression_statment_lv0: expression_statment '=' expression_statment {printf("expression = \n");}
                    | expression_statment '+' expression_statment {;}
                    | expression_statment '-' expression_statment {;}
                    | expression_statment '*' expression_statment {;}

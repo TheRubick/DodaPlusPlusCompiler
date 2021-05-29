@@ -14,7 +14,7 @@
 "string"       {return STRING;}
 "void"         {return VOID;}
 
-[\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {printf("yaraaab"); return yytext[0];}
+[\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   { return yytext[0];}
 
 
 "==" {return EQUAL;}
