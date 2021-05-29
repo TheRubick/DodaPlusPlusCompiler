@@ -67,6 +67,7 @@
 %left '*' '/' '%'
 %left '^'
 %right NOT //hights precedence
+%left ifpred
 
 %start program 
 /*
@@ -92,10 +93,10 @@ program:                    {printf("program emptyyyyy");}
         | statments         { printf("program"); } 
         ;
 
-statments: statment                 {printf("statment");}
-        |  statments statment       {;}
-        |  block_statment           {;}
-        |  statments block_statment {;}
+statments: statment                 {printf("statment\n");}
+        |  statments statment       {printf("statments statement");}
+        |  block_statment           {printf("block statement");}
+        |  statments block_statment {printf("statments block statement");}
         ;
 
 block_statment: '{' '}'  {;}
@@ -103,7 +104,7 @@ block_statment: '{' '}'  {;}
               ;
 statment:   ';' {;}
         |   while_statment {;}
-        |   if_statment    {;}
+        |   if_statment    {printf(" know if statment\n");}
         |   for_statment   {;}
         |   do_while_statment ';' {;}
         |   switch_statment  {;}
@@ -115,17 +116,17 @@ statment:   ';' {;}
 while_statment: WHILE '(' expression_statment ')' block_statment  {;}
             ;
 
-if_statment: matched_if  {;}
-           | unmatched_if {;}
+if_statment: matched_if  {printf("matched if '''''\n");}
+           | unmatched_if {printf(" un matched if '''''\n");}
             ;
 
-matched_if: IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' matched_if '}' {printf("matchedIf 1st\n");}
+matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE '{' matched_if '}' %prec ifpred {printf("matchedIf 1st\n");}
           | statments  {printf("matchedIf statments\n");}
           | {printf("matchedIf empty\n");}
           ;
 
-unmatched_if: IF '(' expression_statment ')' '{' statments '}' {;}
-            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {;}
+unmatched_if: IF '(' expression_statment ')' '{' statments '}' {printf("unmatched if 1");}
+            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {printf("matchedIf 2st\n");}
             ;
 
 for_statment: FOR '(' for_begining ';' expression_statment ';' expression_statment ')' block_statment {;}
