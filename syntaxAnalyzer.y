@@ -119,11 +119,12 @@ if_statment: matched_if  {;}
            | unmatched_if {;}
             ;
 
-matched_if: IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' matched_if '}' {;}
-          | statments  {;}
+matched_if: IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' matched_if '}' {printf("matchedIf 1st\n");}
+          | statments  {printf("matchedIf statments\n");}
+          | {printf("matchedIf empty\n");}
           ;
 
-unmatched_if: IF '(' expression_statment ')' block_statment {;}
+unmatched_if: IF '(' expression_statment ')' '{' statments '}' {;}
             | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {;}
             ;
 
@@ -136,10 +137,10 @@ for_begining: expression_statment {;}
 do_while_statment: DO block_statment WHILE '(' expression_statment ')' {;}
                  ;
 
-switch_statment: SWITCH '(' Identifiers ')' cases_statment {;}
+switch_statment: SWITCH '(' Identifiers ')'  cases_statment {;}
                ;
 
-case_statment: CASE intType ':' statments {;}
+case_statment: CASE intType ':' statments  {;} 
              | CASE intType ':' statments BREAK ';' {;}
              ;
 // force default statment
