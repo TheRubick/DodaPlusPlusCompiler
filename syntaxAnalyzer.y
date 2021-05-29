@@ -148,8 +148,8 @@ cases_statment: DEFAULT ':' statment {;}
               | case_statment cases_statment {;}
               ;
 
-func_defintion_statment: FUNC VOID Identifiers '(' arguments ')' block_statment {;}
-                       | FUNC data_type Identifiers '(' arguments ')' func_return_statments {;}
+func_defintion_statment: FUNC VOID Identifiers '(' func_def_arguments ')' block_statment {;}
+                       | FUNC data_type Identifiers '(' func_def_arguments ')' func_return_statments {;}
                        ;
 
 return_statment:  RETURN expression_statment ';'  {;}
@@ -164,12 +164,13 @@ data_type: INT {;}
          | BOOL {;}
          | STRING {;}
          ;
-
+func_def_arguments: {;}
+             | data_type Identifiers {;}
+             | func_def_arguments ',' data_type Identifiers {;}
+             ;
 arguments: {;}
-         | data_type Identifiers {;}
          | expression_statment {;} // test this
          | arguments ',' expression_statment {;} //could be more than one in identifire check
-         | arguments ',' data_type Identifiers {;}
          ;
 
 func_call_statment: Identifiers '(' arguments ')' {;}
