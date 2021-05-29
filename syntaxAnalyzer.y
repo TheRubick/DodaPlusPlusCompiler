@@ -140,7 +140,7 @@ switch_statment: SWITCH '(' Identifiers ')' cases_statment {;}
                ;
 
 case_statment: CASE intType ':' statments {;}
-             | CASE intType ':' statments BREAK ';' {;}
+             | CASE intType ':' statments ';' BREAK ';' {;}
              ;
 // force default statment
 cases_statment: DEFAULT ':' statments {;}
