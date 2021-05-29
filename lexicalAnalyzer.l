@@ -12,6 +12,7 @@
 "Float"        {return FLOAT;}
 "Bool"         {return BOOL;}
 "String"       {return STRING;}
+"Void"         {return VOID;}
 
 [\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {return yytext[0];}
 
