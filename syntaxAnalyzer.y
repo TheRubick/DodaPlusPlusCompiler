@@ -137,14 +137,14 @@ for_begining: expression_statment {;}
 do_while_statment: DO block_statment WHILE '(' expression_statment ')' {;}
                  ;
 
-switch_statment: SWITCH '(' Identifiers ')'  cases_statment {;}
+switch_statment: SWITCH '(' Identifiers ')' cases_statment  {;}
                ;
 
-case_statment: CASE intType ':' statments  {;} 
-             | CASE intType ':' statments BREAK ';' {;}
+case_statment: CASE intType ':' statment  {;}
+             | CASE intType ':' statment BREAK ';' {;}
              ;
 // force default statment
-cases_statment: DEFAULT ':' statments {;}
+cases_statment: DEFAULT ':' statment {;}
               | case_statment cases_statment {;}
               ;
 
