@@ -8,7 +8,11 @@
 
 ```
 yacc -d syntaxAnalyzer.y
-flex lexicalAnalyzer.l
-g++ lex.yy.c y.tab.c 
+&& flex lexicalAnalyzer.l
+&& g++ lex.yy.c y.tab.c 
 ./a.out
+
+#for cleaning the directory
+
+rm y.tab.* && rm a.out && rm lex.yy.c
 ```

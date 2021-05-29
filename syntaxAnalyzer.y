@@ -167,8 +167,6 @@ data_type: INT {;}
 
 arguments: {;}
          | data_type Identifiers {;}
-         | expression_statment {;} // test this
-         | arguments ',' expression_statment {;} //could be more than one in identifire check
          | arguments ',' data_type Identifiers {;}
          ;
 
@@ -185,7 +183,7 @@ value: intType {;}
      | stringType {;}   
      ;
 
- expression_statment: '(' expression_statment ')'  {;} 
+expression_statment: '(' expression_statment ')'  {;} 
                     | Identifiers {printf("identifier found\n");}
                     | value {;}
                     | func_call_statment {printf("func call\n");}
