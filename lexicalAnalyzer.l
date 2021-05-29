@@ -1,65 +1,60 @@
 %{
-    //#include "y.tab.h"
+    #include "y.tab.h"
     #include <stdlib.h>
     void yyerror(char *);
-    int Identifiers,Variables,Constants,MathExps,relationalExps,
-    binaryLogicalExps,unaryLogicalExps,Keywords,oneStatConditions,
-    Assignment,floatType,intType,stringType,boolType,
-    openPar,closedPar,openCurBrace,closedCurBrace,
-    comma,semiColon;
 %}
 
 %%
 
-Const[ \t]+(Int|Float|Bool|String) {Constants++;printf("Constant = %s\n",yytext);}
+"Const" {return Constant;}
 
-(Int|Float|Bool|String)       {Variables++;printf("Variable = %s\n",yytext);}
+"Int"          {return INT;}
+"Float"        {return FLOAT;}
+"Bool"         {return BOOL;}
+"String"       {return STRING;}
+"Void"         {return VOID;}
 
-[\+\*\-\%\/\^]   {MathExps++;printf("MathExp = %s\n",yytext);}
+[\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {return yytext[0];}
 
-(==|\!=|\>=|\<=|\<|\>)  {relationalExps++;printf("RelationalLogicalExp = %s\n",yytext);}
 
-[\|\&]   {binaryLogicalExps++;printf("BinaryLogicalExp = %s\n",yytext);}
+"==" {return EQUAL;}
+"!=" {return NOT_EQUAL;}
+">=" {return GREATER_EQUAL;}
+"<=" {return LESS_EQUAL;}
+"<"  {return LESS_THAN;}
+">"  {return GREATER_THAN;}
 
-\! {unaryLogicalExps++;printf("unaryExp = %s\n",yytext);}
+\| {return OR;}
+\& {return AND;}
+\! {return NOT;}
 
-= {Assignment++;printf("Assignment = %s\n",yytext);}
 
-(else|for|do|break|case|func|default\:) {Keywords++;printf("Keyword = %s\n",yytext);}
+"else" {return ELSE;}
+"for" {return FOR;}
+"do" {return DO;}
+"break" {return BREAK;}
+"case" {return CASE;}
+"func" {return FUNC;}
+"default" {return DEFAULT;}
+"if"  {return IF;}
+"while" {return WHILE;}
+"switch" {return SWITCH;}
+"return" {return RETURN;}
 
-(if|while|switch) {oneStatConditions++;printf("oneStatCondition = %s",yytext);}
+.*(\.{2,}).* {printf("invalid sequence\n");} //invalid float number
 
-([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {floatType++;printf("floatType = %s\n",yytext);}
+([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval = atof(yytext); return floatType;}
+[0-9]+ {yylval = atoi(yytext); return intType;}
+(\".*(\"|\\)\")|(\'.*\') {printf("invalid sequence\n");}
+(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval = yytext; return stringType;}
+"false" {yylval = atoi("0"); return boolType;}
+"true" {yylval = atoi("1"); return boolType;}
 
-[0-9]+ {intType++;printf("intType = %s\n",yytext);}
+[a-zA-Z\_][0-9a-zA-Z\_]* {yylval = yytext;return Identifiers;} // Identifiers
 
-(\".*\")|(\'.*\') {stringType++;printf("stringType = %s\n",yytext);}
-
-false|true {boolType++;printf("boolType = %s\n",yytext);}
-
-\( {openPar++;printf("openPar = %s\n",yytext);}
-
-\) {closedPar++;printf("closedPar = %s\n",yytext);}
-
-\{ {openCurBrace++;printf("openCurBrace = %s\n",yytext);}
-
-\} {closedCurBrace++;printf("closedCurBrace = %s\n",yytext);}
-
-\, {comma++;printf("comma = %s\n",yytext);}
-
-\; {semiColon++;printf("semiColon = %s\n",yytext);}
-
-[a-zA-Z\_][0-9a-zA-Z\_]* {Identifiers++;printf("Identifier = %s",yytext);}
-
-[\?\@\#\$\~]           {printf("invalid");} //@TODO complete the invalid characters
+[\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
 %%
-int main(void){
-    yylex();
-    printf("\nVariables = %d, Constants = %d\n",Variables,Constants);
-    printf("\nMathExps = %d, BinaryLogicalExps = %d, RelationalLogicalExps = %d\n",MathExps,binaryLogicalExps,relationalExps);
-    return 0;
-}
 /*
     To be called at the EOF
 */

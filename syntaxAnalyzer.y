@@ -14,25 +14,6 @@
 }
 
 
-%token Variable //EXPAND
-
-%token MathExps // JUST RETURN TEXT LIKE CALC EXAMPLE 
-%token relationalExps //EXPAND
-%token binaryLogicalExps //EXPAND
-%token unaryLogicalExps //CHANGE NAME
-%token Keywords //EXPAND
-%token oneStatConditions // EXPAND
-%token Assignment  //SAME AS MATH EXPRESSIONS
-
-%token openPar //SAME AS MATH EXPRESSIONS
-%token closedPar//SAME AS MATH EXPRESSIONS
-%token openCurBrace //SAME AS MATH EXPRESSIONS
-%token closedCurBrace //SAME AS MATH EXPRESSIONS
-%token comma //SAME AS MATH EXPRESSIONS
-%token semiColon //SAME AS MATH EXPRESSIONS
-//NOTE DON'T FORGET TO ADD :
-/////////////////////////////////////////////////////
-// With us 
 %token Identifiers
 // TYPES
 %token INT
