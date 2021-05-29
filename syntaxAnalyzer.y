@@ -1,7 +1,10 @@
 %{
+    #define __USE_C99_MATH
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
+    #include <stdbool.h>
+    using namespace std;
     int yylex(void);
     void yyerror(char *);
 %}
@@ -85,11 +88,11 @@ declare var and const
 */
 %%
 
-program:                     {;}
-        | statments         { printf("%d\n", $2); } 
+program:                    {printf("program emptyyyyy");}
+        | statments         { printf("program"); } 
         ;
 
-statments: statment                 {;}
+statments: statment                 {printf("statment");}
         |  statments statment       {;}
         |  block_statment           {;}
         |  statments block_statment {;}
@@ -105,7 +108,7 @@ statment:   ';' {;}
         |   do_while_statment ';' {;}
         |   switch_statment  {;}
         |   func_defintion_statment  {;}
-        |   var_declare_statment ';' {;}
+        |   var_declare_statment ';' {printf("st_var_dec");}
         |   expression_statment ';' {;}
         ;
 
@@ -169,7 +172,7 @@ arguments: {;}
 func_call_statment: Identifiers '(' arguments ')' ';' {;}
                   ;
 
-var_declare_statment: data_type Identifiers  {;}
+var_declare_statment: data_type Identifiers  {printf("var_declare");}
                     | data_type Identifiers '=' expression_statment  {;}
                     | Constant data_type Identifiers '=' expression_statment  {;}
                     ;

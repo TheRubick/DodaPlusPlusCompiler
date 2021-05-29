@@ -8,13 +8,13 @@
 
 "Const" {return Constant;}
 
-"Int"          {return INT;}
+"int"          {printf("Integeeer\n");return INT;}
 "Float"        {return FLOAT;}
 "Bool"         {return BOOL;}
 "String"       {return STRING;}
 "Void"         {return VOID;}
 
-[\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {return yytext[0];}
+[\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   {printf("yaraaab"); return yytext[0];}
 
 
 "==" {return EQUAL;}
@@ -43,14 +43,14 @@
 
 .*(\.{2,}).* {printf("invalid sequence\n");} //invalid float number
 
-([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval = atof(yytext); return floatType;}
-[0-9]+ {yylval = atoi(yytext); return intType;}
+([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval.floatVal = atof(yytext); return floatType;}
+[0-9]+ {yylval.intVal = atoi(yytext); return intType;}
 (\".*(\"|\\)\")|(\'.*\') {printf("invalid sequence\n");}
-(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval = yytext; return stringType;}
-"false" {yylval = atoi("0"); return boolType;}
-"true" {yylval = atoi("1"); return boolType;}
+(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval.stringVal = yytext; return stringType;}
+"false" {yylval.boolVal = false; return boolType;}
+"true" {yylval.boolVal = true; return boolType;}
 
-[a-zA-Z\_][0-9a-zA-Z\_]* {yylval = yytext;return Identifiers;} // Identifiers
+[a-zA-Z\_][0-9a-zA-Z\_]* {yylval.stringVal = yytext; printf("Lex iden\n"); return Identifiers;} // Identifiers
 
 [\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
