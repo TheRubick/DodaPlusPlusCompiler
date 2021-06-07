@@ -1,6 +1,10 @@
 %{
-    #include "y.tab.h"
+    
     #include <stdlib.h>
+    #include "Doda.h"
+    #include "y.tab.h"
+    #include <string>
+    
     void yyerror(char *);
 %}
 
@@ -11,7 +15,7 @@
 "int"          {printf("Integeeer\n");return INT;}
 "float"        {return FLOAT;}
 "bool"         {return BOOL;}
-"string"       {return STRING;}
+"char"       {return STRINGG;}
 "void"         {return VOID;}
 
 [\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   { return yytext[0];}
@@ -43,14 +47,14 @@
 
 .*(\.{2,}).* {yyerror("invalid sequence\n");} //invalid float number
 
-([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval.floatVal = atof(yytext); return floatType;}
+([0-9]+\.[0-9]+)|(\.[0-9]+)|([0-9]+\.) {yylval.floatVal = std::stof(yytext); return floatType;}
 [0-9]+ {yylval.intVal = atoi(yytext); return intType;}
 (\".*\".*\")|(\".*\\\")|(\'.*\') {yyerror("invalid sequence\n");}
-(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval.stringVal = yytext; return stringType;}
+(\"\")|(\"("\n"|"\t"|"\r"|.*)\")|(\"\'("\n"|"\t"|"\r"|.*)\'\") {yylval.stringVal = yytext[0]; return stringType;}
 "false" {yylval.boolVal = false; return boolType;}
 "true" {yylval.boolVal = true; return boolType;}
 
-[a-zA-Z\_][0-9a-zA-Z\_]* {yylval.stringVal = yytext; printf("Lex iden\n"); return Identifiers;} // Identifiers
+[a-zA-Z\_][0-9a-zA-Z\_]* {yylval.realStringVal = strdup(yytext); printf("Lex iden\n"); return Identifiers;} // Identifiers
 
 [\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
