@@ -6,9 +6,15 @@
 3. g++ lex.yy.c y.tab.c 
 4. ./a.out
 
+
 ```
+<<<<<<< HEAD
 yacc -d syntaxAnalyzer.y && flex lexicalAnalyzer.l && g++ lex.yy.c y.tab.c 
 ./a.out
+=======
+yacc -d syntaxAnalyzer.y &&flex lexicalAnalyzer.l && g++ lex.yy.c y.tab.c Doda.cpp && 
+./a.out < ./input.txt
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 ```
 # for cleaning the directory
 ```

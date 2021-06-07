@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 /* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
    Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
+=======
+/* A Bison parser, made by GNU Bison 3.0.4.  */
+
+/* Bison interface for Yacc-like parsers in C
+
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,9 +39,12 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+<<<<<<< HEAD
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
+=======
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
@@ -43,6 +54,17 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+<<<<<<< HEAD
+=======
+/* "%code requires" blocks.  */
+#line 29 "syntaxAnalyzer.y" /* yacc.c:1909  */
+ 
+     #include "./Doda.h" 
+     
+     
+
+#line 50 "y.tab.h" /* yacc.c:1909  */
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -53,7 +75,11 @@ extern int yydebug;
     INT = 259,
     FLOAT = 260,
     BOOL = 261,
+<<<<<<< HEAD
     STRING = 262,
+=======
+    STRINGG = 262,
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
     VOID = 263,
     Constant = 264,
     EQUAL = 265,
@@ -88,7 +114,11 @@ extern int yydebug;
 #define INT 259
 #define FLOAT 260
 #define BOOL 261
+<<<<<<< HEAD
 #define STRING 262
+=======
+#define STRINGG 262
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 #define VOID 263
 #define Constant 264
 #define EQUAL 265
@@ -119,18 +149,35 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+<<<<<<< HEAD
 union YYSTYPE
 {
 #line 12 "syntaxAnalyzer.y"
+=======
+
+union YYSTYPE
+{
+#line 34 "syntaxAnalyzer.y" /* yacc.c:1909  */
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 
     int intVal;
     float floatVal;
     bool boolVal;
+<<<<<<< HEAD
     char* stringVal;
 
 #line 132 "y.tab.h"
 
 };
+=======
+    char stringVal;
+    char* realStringVal;
+    nodeType *nPtr;             /* node pointer */
+
+#line 139 "y.tab.h" /* yacc.c:1909  */
+};
+
+>>>>>>> c7294751dd61953dc03a5a064fdea63b27a400e2
 typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
