@@ -12,10 +12,10 @@
 
 "const" {return Constant;}
 
-"int"          {printf("Integeeer\n");return INT;}
-"float"        {return FLOAT;}
-"bool"         {return BOOL;}
-"char"       {return STRINGG;}
+"int"          {printf("Integeeer\n"); yylval.intVal = 0; return INT;}
+"float"        {yylval.intVal = 1; return FLOAT;}
+"bool"         {yylval.intVal = 2; return BOOL;}
+"char"       {yylval.intVal = 3; return STRINGG;}
 "void"         {return VOID;}
 
 [\+\*\-\%\/\^\}\{\(\)\,\;\:\=]   { return yytext[0];}

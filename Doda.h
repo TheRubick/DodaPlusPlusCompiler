@@ -2,7 +2,7 @@
 #define __DODA_H_
 #include <string>
 using namespace std;
-typedef enum { typeConChar,typeConBool,typeConFloat,typeCon, typeId, typeOpr } nodeEnum;
+typedef enum { typeConChar,typeConBool,typeConFloat,typeCon, typeId,typeArg, typeOpr } nodeEnum;
 
 /* constants */
 typedef struct {
@@ -26,7 +26,10 @@ typedef struct {
 typedef struct {
     string i;                      /* subscript to sym array */
 } idNodeType;
-
+/* identifiers */
+typedef struct {
+    string i;                      /* subscript to sym array */
+} argNodeType;
 /* operators */
 typedef struct {
     int oper;                   /* operator */
@@ -44,6 +47,7 @@ typedef struct nodeTypeTag {
         floatConNodeType conF;  /* float */
         boolConNodeType conB;   /* bool */
         charConNodeType conC;
+        argNodeType arg;
     };
 } nodeType;
 

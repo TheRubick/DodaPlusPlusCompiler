@@ -903,22 +903,22 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 15 "lexicalAnalyzer.l"
-{printf("Integeeer\n");return INT;}
+{printf("Integeeer\n"); yylval.intVal = 0; return INT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 16 "lexicalAnalyzer.l"
-{return FLOAT;}
+{yylval.intVal = 1; return FLOAT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 17 "lexicalAnalyzer.l"
-{return BOOL;}
+{yylval.intVal = 2; return BOOL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 18 "lexicalAnalyzer.l"
-{return STRINGG;}
+{yylval.intVal = 3; return STRINGG;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP

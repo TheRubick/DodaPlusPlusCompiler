@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 27 "syntaxAnalyzer.y" /* yacc.c:1909  */
+#line 29 "syntaxAnalyzer.y" /* yacc.c:1909  */
  
      #include "./Doda.h" 
      
@@ -126,7 +126,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "syntaxAnalyzer.y" /* yacc.c:1909  */
+#line 34 "syntaxAnalyzer.y" /* yacc.c:1909  */
 
     int intVal;
     float floatVal;
