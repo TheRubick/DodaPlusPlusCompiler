@@ -7,9 +7,7 @@
 4. ./a.out
 
 ```
-yacc -d syntaxAnalyzer.y
-&& flex lexicalAnalyzer.l
-&& g++ lex.yy.c y.tab.c 
+yacc -d syntaxAnalyzer.y && flex lexicalAnalyzer.l && g++ lex.yy.c y.tab.c 
 ./a.out
 ```
 # for cleaning the directory
