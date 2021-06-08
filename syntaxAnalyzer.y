@@ -2,11 +2,16 @@
     #define __USE_C99_MATH
     #include <stdio.h>
     #include <stdlib.h>
-    #include "Doda.h"
-    
     #include <stdbool.h>
     #include <stdarg.h>
+    #include "Doda.h"
+    #include "DodaSymbolTable.cpp"
     using namespace std;
+    /*
+    Symbol Table
+*/
+    DodaSymbolTable* symbolTable = new DodaSymbolTable();
+
     int yylex(void);
     void yyerror(char *);
 
@@ -21,15 +26,16 @@
     nodeType *arg(string i);
     void freeNode(nodeType *p);
     int ex(nodeType *p);
+    extern int yylineno;
 
-
-
+    //bool initial = true;
+    //void initializeBlock();
 %}
 
  %code requires { 
-     #include "./Doda.h" 
-     
-     }
+    #include "./Doda.h" 
+   
+    }
 
 %union {
     int intVal;
@@ -102,28 +108,32 @@
 
 %%
 
-program:  program statments         { ex($2);   } 
+program: program statments         { printf("end pro");symbolTable->printTable(); /*ex($2);  /*end Global block*/ } 
         |
         ;
 
 statments: statment                 { $$ = $1; }
         |  statments statment       { $$ = opr(';',2,$1,$2); }
-        |  block_statment           {  $$ = $1;}
+        |  block_statment           {  $$ = $1; } 
         |  statments block_statment { $$ = opr(';',2,$1,$2);}
         ;
 
-block_statment: '{' '}'  {$$ = opr(';',2,NULL,NULL);}
-              |  '{' statments '}'  {$$ = $2; }
+block_statment: '{' '}'                                         {$$ = opr(';',2,NULL,NULL);}
+              |  {printf("Before calling");symbolTable->addBlock(); printf("add block----------------");}'{' statments '}'  {$$ = $3; symbolTable->closeBlock();}
               ;
+
 statment:   ';' {$$ = opr(';',2,NULL,NULL);}
-        |   while_statment {$$ = $1; }
-        |   if_statment    {$$ = $1;}
-        |   for_statment   {$$ = $1;}
-        |   do_while_statment ';' {$$ = $1;}
-        |   switch_statment  {$$ = $1;}
-        |   func_defintion_statment  {$$ = $1;}
-        |   var_declare_statment ';' {$$ = $1;}
-        |   expression_statment ';' {$$ = $1;}
+        |   while_statment              {$$ = $1; }
+        |   if_statment                 {$$ = $1;}
+        |   for_statment                {$$ = $1;}
+        |   do_while_statment ';'       {$$ = $1;}
+        |   switch_statment             {$$ = $1;}
+        |   func_defintion_statment     {$$ = $1;}
+        |   var_declare_statment ';'    {$$ = $1; symbolTable->addRecord(); printf("add block\n");}
+        |   expression_statment ';'     {$$ = $1;} 
+        |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
+        |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
+        |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; }    
         ;
 
 while_statment: WHILE '(' expression_statment ')' block_statment  {$$ = opr(WHILE,2,$3,$5);}
@@ -170,7 +180,7 @@ func_return_statments: '{' return_statment '}' {$$=$2;}
                      |  '{' statments  return_statment '}' {$$ = opr(';',2,$2,$3);}
                      ;
 
-data_type: INT {$$ = $1;}
+data_type: INT {$$ = $1;/*add data type*/ printf("get int\n");}
          | FLOAT {$$ = $1;} 
          | BOOL {$$ = $1;}
          | STRINGG {$$ = $1;}
@@ -188,14 +198,17 @@ func_call_statment: Identifiers '(' arguments ')' {$$ = opr(FUNC,2,id($1),$3);}
                   ;
 
 var_declare_statment: data_type Identifiers  {$$ = opr(';',2,NULL,NULL); }
-                    | data_type Identifiers '=' expression_statment  {$$ = opr('=',2,arg($2),$4);}
+                    | data_type Identifiers '=' expression_statment  {$$ = opr('=',2,arg($2),$4); /*add name and kind*/ 
+                    symbolTable->currentRecord.name = $1; 
+                    symbolTable->currentRecord.kind = "var"; 
+                    }
                     | Constant data_type Identifiers '=' expression_statment  {$$ = opr('=',2,arg($3),$5);}
                     ;
 
-value: intType {$$ = con($1);}
-     | floatType {$$ = conF($1);}
-     | boolType {$$ = conB($1);}
-     | stringType {$$ = conC($1);}   
+value: intType {$$ = con($1); symbolTable->currentRecord.type = "int"; }
+     | floatType {$$ = conF($1); symbolTable->currentRecord.type = "float";}
+     | boolType {$$ = conB($1); symbolTable->currentRecord.type = "bool";}
+     | stringType {$$ = conC($1); symbolTable->currentRecord.type = "char";}   
      ;
 
 expression_statment: '(' expression_statment ')'  {$$ = $2;} 
@@ -328,6 +341,14 @@ nodeType *opr(int oper, int nops, ...) {
     return p;
 }
 
+// void initializeBlock(){
+//     if(initial)
+//     {
+//         symbolTable.addBlock();
+//         initial = false;
+//     }
+// }
+
 void freeNode(nodeType *p) {
     int i;
 
@@ -340,10 +361,14 @@ void freeNode(nodeType *p) {
 }
 
 void yyerror(char *s) {
-    fprintf(stdout, "%s\n", s);
+    
+    //fprintf(" %s near line %d ",s,yylineno); 
+    //fprintf(stdout, "%s\n", s);
 }
 
 int main(void) {
     yyparse();
+//    symbolTable.printTable();
+//    cout<<symbolTable.blocksNum<<endl;
     return 0;
 }
