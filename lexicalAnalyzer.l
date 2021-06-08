@@ -14,7 +14,7 @@
 
 "const" {return Constant;}
 
-"int"          {printf("Integeeer\n"); yylval.intVal = 0; return INT;}
+"int"          { yylval.intVal = 0; return INT;}
 "float"        {yylval.intVal = 1; return FLOAT;}
 "bool"         {yylval.intVal = 2; return BOOL;}
 "char"       {yylval.intVal = 3; return STRINGG;}
