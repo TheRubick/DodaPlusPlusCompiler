@@ -8,6 +8,8 @@
     void yyerror(char *);
 %}
 
+%option yylineno
+
 %%
 
 "const" {return Constant;}
@@ -54,8 +56,8 @@
 "false" {yylval.boolVal = false; return boolType;}
 "true" {yylval.boolVal = true; return boolType;}
 
-[a-zA-Z\_][0-9a-zA-Z\_]* {yylval.realStringVal = strdup(yytext); printf("Lex iden\n"); return Identifiers;} // Identifiers
-
+[a-zA-Z\_][0-9a-zA-Z\_]* {yylval.realStringVal = strdup(yytext);  return Identifiers;} // Identifiers
+\n { }
 [\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
 %%

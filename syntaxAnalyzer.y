@@ -21,6 +21,8 @@
     nodeType *arg(string i);
     void freeNode(nodeType *p);
     int ex(nodeType *p);
+extern int yylineno;
+    
 
 
 
@@ -123,7 +125,10 @@ statment:   ';' {$$ = opr(';',2,NULL,NULL);}
         |   switch_statment  {$$ = $1;}
         |   func_defintion_statment  {$$ = $1;}
         |   var_declare_statment ';' {$$ = $1;}
-        |   expression_statment ';' {$$ = $1;}
+        |   expression_statment ';' {$$ = $1;} 
+        |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
+        |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
+        |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; }    
         ;
 
 while_statment: WHILE '(' expression_statment ')' block_statment  {$$ = opr(WHILE,2,$3,$5);}
@@ -340,7 +345,9 @@ void freeNode(nodeType *p) {
 }
 
 void yyerror(char *s) {
-    fprintf(stdout, "%s\n", s);
+    
+    //fprintf(" %s near line %d ",s,yylineno); 
+    //fprintf(stdout, "%s\n", s);
 }
 
 int main(void) {

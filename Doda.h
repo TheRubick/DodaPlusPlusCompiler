@@ -19,7 +19,7 @@ typedef struct {
 } boolConNodeType;
 
 typedef struct {
-    bool value;                  /* value of constant */
+    char value;                  /* value of constant */
 } charConNodeType;
 
 /* identifiers */
@@ -41,7 +41,7 @@ typedef struct nodeTypeTag {
     nodeEnum type;              /* type of node */
 
     union {
-        conNodeType con;        /* constants */
+        conNodeType con;        /* int */
         idNodeType id;          /* identifiers */
         oprNodeType opr;        /* operators */
         floatConNodeType conF;  /* float */

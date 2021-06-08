@@ -1,4 +1,7 @@
-func void main()
-{
-  int 2s = 10;
+
+  y = 7;
+  x = 5;
+  int a = + * 3;
+  int ah = 3
+  }
 }
