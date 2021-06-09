@@ -57,6 +57,7 @@ public:
         childreen = SymbolTable[currentBlock].childs;
         string blockName = "block" + to_string(blocksNum);
         childreen.push_back(blockName);
+        SymbolTable[currentBlock].childs = childreen;
         // SymbolTable[currentBlock].childs.push_back("block" + to_string(blocksNum)); //add child to parent
         currentBlock = "block" + to_string(blocksNum); // from parent to child
         if (funcFlag)
