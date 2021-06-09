@@ -1,0 +1,39 @@
+PROC main
+push_int 0
+pop x
+push_int 10
+pop y
+push x
+push y
+div
+push x
+sub
+pop z
+push_bool 1
+pop a
+push_bool 0
+pop b
+push a
+push b
+and
+pop c
+ENDP main
+Symbol Table **************************************************
+blocksnum : 1
+block1
+parent : block0
+printing the records
+x int Var
+y int Var
+z int Var
+a bool Var
+b bool Var
+c bool Var
+printing the childs
+---------------------------------------------------------
+block0
+parent : Global
+printing the records
+main void func
+printing the childs
+---------------------------------------------------------

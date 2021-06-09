@@ -1,0 +1,12 @@
+Symbol Table **************************************************
+blocksnum : 1
+block1
+parent : block0
+printing the records
+printing the childs
+---------------------------------------------------------
+block0
+parent : Global
+printing the records
+printing the childs
+---------------------------------------------------------

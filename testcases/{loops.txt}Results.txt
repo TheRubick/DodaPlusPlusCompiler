@@ -1,0 +1,94 @@
+PROC main
+push_int 0
+pop i
+L0:
+push i
+push_int 10
+compLT
+jnz L1
+push_int 10
+pop b
+push i
+push_int 1
+add
+pop i
+jmp L0
+L1:
+push_int 0
+pop x
+L2:
+push x
+push_int 20
+compLT
+jnz L3
+push_int 1
+push x
+add
+pop x
+jmp L2
+L3:
+push_int 0
+pop x
+L4:
+push_int 1
+push x
+add
+pop x
+push x
+push_int 20
+compLT
+jnz L5
+jmp L4
+L5:
+push x
+push_int 1
+compNE
+jz L6
+push_int 10
+pop x
+jmp s1
+L6:
+pop
+s1:
+ENDP main
+Symbol Table **************************************************
+blocksnum : 6
+block6
+parent : block1
+printing the records
+printing the childs
+---------------------------------------------------------
+block5
+parent : block1
+printing the records
+printing the childs
+---------------------------------------------------------
+block4
+parent : block1
+printing the records
+printing the childs
+---------------------------------------------------------
+block3
+parent : block1
+printing the records
+printing the childs
+---------------------------------------------------------
+block2
+parent : block1
+printing the records
+i int Var
+b int Var
+printing the childs
+---------------------------------------------------------
+block1
+parent : block0
+printing the records
+x int Var
+printing the childs
+---------------------------------------------------------
+block0
+parent : Global
+printing the records
+main void func
+printing the childs
+---------------------------------------------------------

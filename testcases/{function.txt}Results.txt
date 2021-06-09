@@ -1,0 +1,40 @@
+PROC sum
+pop x
+pop y
+push x
+push y
+add
+RET
+ENDP sum
+PROC main
+push_int 20
+push_int 10
+CALL sum
+pop a
+push a
+push a
+CALL sum
+pop a
+ENDP main
+Symbol Table **************************************************
+blocksnum : 2
+block2
+parent : block0
+printing the records
+a int Var
+printing the childs
+---------------------------------------------------------
+block1
+parent : block0
+printing the records
+x int par
+y int par
+printing the childs
+---------------------------------------------------------
+block0
+parent : Global
+printing the records
+sum int func
+main void func
+printing the childs
+---------------------------------------------------------

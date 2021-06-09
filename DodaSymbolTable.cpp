@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 struct record
@@ -24,7 +25,7 @@ class DodaSymbolTable
 public:
     DodaSymbolTable()
     {
-
+        remove("resultsFile.txt");
         SymbolTable["block0"].parent = "Global";
         currentBlock = "block0";
         // addBlock();
@@ -40,7 +41,8 @@ public:
     bool idenExp = false;
     string secondidentifier;
     vector<string> matches;
-
+    //printing the symbol table
+    ofstream resultsFile;
     void addBlock()
     {
 
@@ -106,35 +108,40 @@ public:
     }
     void printTable()
     {
-        cout << "Symbol Table **************************************************\n";
-        cout << "blocksnum : " << blocksNum << endl;
+        resultsFile.open("resultsFile.txt",std::ios_base::app);
+        resultsFile << "Symbol Table **************************************************\n";
+        resultsFile << "blocksnum : " << blocksNum << endl;
         for (auto x : SymbolTable)
         {
-            cout << x.first << endl;
+            resultsFile << x.first << endl;
             printBlock(x.second);
         }
         cout << "**************************************************\n";
+        resultsFile.close();
     }
-
-  
     void printBlock(blockNode b)
     {
 
         string parent;
-        cout << "parent : " << b.parent << endl;
-        cout << "printing the records" << endl;
+        resultsFile << "parent : " << b.parent << endl;
+        resultsFile << "printing the records" << endl;
         for (auto record : b.records)
         {
-            cout << record.name << " " << record.type << " " << record.kind << endl;
+            resultsFile << record.name << " " << record.type << " " << record.kind << endl;
         }
-        cout << "printing the childs" << endl;
+        resultsFile << "printing the childs" << endl;
         for (auto child : b.childs)
         {
-            cout << child << endl;
+            resultsFile << child << endl;
         }
-        cout << "---------------------------------------------------------\n";
+        resultsFile << "---------------------------------------------------------\n";
     }
 
+
+    
+
+    
+    
     /*
         Semantics functions
     */
@@ -259,14 +266,11 @@ public:
         }
         
         return type;
-
-        
     }
 
     ~DodaSymbolTable()
     {
-
-        closeBlock();
+        resultsFile << "-----------------------------------------------------------------------------\n";
         printTable();
     }
 };
