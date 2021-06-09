@@ -119,6 +119,8 @@ extern int yylineno;
 %right NOT //hights precedence
 %left ifpred
 
+%nonassoc IF 
+%nonassoc ELSE
 //%start program 
 
 %%
@@ -127,16 +129,16 @@ program:  program statments         { ex($2);  }
         |
         ;
 
-statments: statment                 { $$ = $1; printf("statement\n"); }
-        |  statments statment       { $$ = opr(';',2,$1,$2); printf("Statment statments \n");}
-        |  block_statment           {  $$ = $1;printf("block statment \n");}
+statments: 
+          statments statment       { $$ = opr(';',2,$1,$2); printf("Statment statments \n");}
+        | statment                 { $$ = $1; printf("statement\n"); }       
         |  statments block_statment { $$ = opr(';',2,$1,$2); printf("statement block statment\n");}
+        |  block_statment           {  $$ = $1;printf("block statment \n");}
         ;
 
-block_statment: {symbolTable.addBlock();}  
-                '{' statments '}'  { $$ = $3; symbolTable.closeBlock(); printf("close block two\n"); } 
-              | 
-              ;
+block_statment:  {symbolTable.addBlock();} '{' statments '}'  { $$ = $3; symbolTable.closeBlock(); printf("close block two\n"); } 
+                    ;
+
 statment:   ';' {$$ = opr(';',2,NULL,NULL);}
         |   while_statment {$$ = $1; }
         |   if_statment    {$$ = $1;}
@@ -156,19 +158,25 @@ while_statment: WHILE '(' expression_statment ')' block_statment  {$$ = opr(WHIL
 
 if_statment: matched_if  { $$ = $1; }
            | unmatched_if {$$ = $1; }
-            ;
+           ;
 
-matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE '{' statments '}' %prec ifpred {$$=opr(IF,3,$3,$6,$10); }
-          ;
+matched_if: IF '(' expression_statment ')' block_statment ELSE block_statment  %prec ifpred  {$$=opr(IF,3, $3, $5, $7); printf("matched if\n"); }
+        ;
 
-unmatched_if: IF '(' expression_statment ')' '{' statments '}' {$$=opr(IF,2,$3,$6); }
-            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {$$ = opr(IF,3,$3,$6,$10);  }
-            ;
+unmatched_if: IF '(' expression_statment ')' block_statment                         {$$=opr(IF,2,$3,$5); printf("un_matched if\n");}
+        ;
+
+//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE '{' statments '}' %prec ifpred {$$=opr(IF,3,$3,$6,$10); printf("matched if\n"); }
+//          ;
+
+//unmatched_if: IF '(' expression_statment ')' '{' statments '}' {$$=opr(IF,2,$3,$6); printf("un_matched if\n");}
+//            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {$$ = opr(IF,3,$3,$6,$10); printf("un_matched if two\n"); }
+//            ;
 
 for_statment: FOR '(' for_begining ';' expression_statment ';' expression_statment ')' block_statment {$$ = opr(FOR,4,$3,$5,$7,$9);}
             ;
 for_begining: expression_statment {$$=$1;}
-            | var_declare_statment {$$=$1;}
+            | {symbolTable.forFlag = true;} var_declare_statment {$$=$2;}
             ;
 
 do_while_statment: DO block_statment WHILE '(' expression_statment ')' {$$ = opr(DO,2,$2,$5);}
@@ -177,22 +185,30 @@ do_while_statment: DO block_statment WHILE '(' expression_statment ')' {$$ = opr
 switch_statment: SWITCH '(' Identifiers ')' cases_statment  {$$=opr(SWITCH,2,id($3),$5);}
                ;
 
-case_statment: CASE intType ':' statment BREAK ';' {$$ =opr(CASE,2,con($2),$4) ;}
+case_statment: {symbolTable.addBlock();} CASE intType ':' statment BREAK ';' {$$ =opr(CASE,2,con($3),$5); symbolTable.closeBlock();}
              ;
 // force default statmentcases_statment
-cases_statment: DEFAULT ':' statment {$$ = opr(DEFAULT,1,$3);}
+cases_statment: {symbolTable.addBlock();} DEFAULT ':' statment {$$ = opr(DEFAULT,1,$4);symbolTable.closeBlock();}
               | case_statment cases_statment {$$ = opr(';',2,$1,$2);}
               ;
 
-func_defintion_statment: FUNC VOID Identifiers '(' func_def_arguments ')' block_statment {$$=opr(FUNC,3,id($3),$5,$7);}
-                       | FUNC data_type Identifiers '(' func_def_arguments ')' func_return_statments {$$=opr(FUNC,3,id($3),$5,$7);}
+func_defintion_statment: FUNC VOID Identifiers '(' func_def_arguments ')' block_statment {$$=opr(FUNC,3,id($3),$5,$7); 
+                            symbolTable.currentRecord.type = "void";
+                            symbolTable.currentRecord.name = $3;
+                            symbolTable.currentRecord.kind = "func";
+                            symbolTable.addRecord();}
+                       | FUNC data_type Identifiers '(' func_def_arguments ')' func_return_statments {$$=opr(FUNC,3,id($3),$5,$7);
+                            symbolTable.currentRecord.name = $3;
+                            symbolTable.currentRecord.kind = "func";
+                            symbolTable.addRecord();
+                            }
                        ;
 
 return_statment:  RETURN expression_statment ';'  {$$ = opr(RETURN,1,$2);}
                ;
 
-func_return_statments: '{' return_statment '}' {$$=$2;}
-                     |  '{' statments  return_statment '}' {$$ = opr(';',2,$2,$3);}
+func_return_statments: {symbolTable.addBlock();} '{' return_statment '}' {$$=$3;symbolTable.closeBlock();}
+                     |  {symbolTable.addBlock();} '{' statments  return_statment '}' {$$ = opr(';',2,$3,$4);symbolTable.closeBlock();}
                      ;
 
 data_type: INT {$$ = $1;symbolTable.currentRecord.type = "int";}
@@ -201,8 +217,18 @@ data_type: INT {$$ = $1;symbolTable.currentRecord.type = "int";}
          | STRINGG {$$ = $1;symbolTable.currentRecord.type = "char";}
          ;
 func_def_arguments: {$$ = opr(';',2,NULL,NULL);}
-             | data_type Identifiers {$$ = arg($2);}
-             | func_def_arguments ',' data_type Identifiers {$$ = opr(';',2,$1,arg($4));}
+             | data_type Identifiers {$$ = arg($2);
+             printf("inside func def arguments case 1 \n");
+             symbolTable.currentRecord.name = $2;
+             symbolTable.currentRecord.kind = "par";
+             symbolTable.funcFlag = true;
+             symbolTable.addToFunc();}
+             | func_def_arguments ',' data_type Identifiers {$$ = opr(';',2,$1,arg($4));
+              printf("inside func def arguments case 2 \n");
+             symbolTable.currentRecord.name = $4;
+             symbolTable.currentRecord.kind = "par";
+             symbolTable.funcFlag = true;
+             symbolTable.addToFunc();}
              ;
 arguments: {$$ = opr(';',2,NULL,NULL);}
          | expression_statment {$$ = $1;} // test this

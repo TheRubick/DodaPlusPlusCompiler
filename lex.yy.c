@@ -162,27 +162,8 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
     
-    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
-     *       access to the local variable yy_act. Since yyless() is a macro, it would break
-     *       existing scanners that call yyless() from OUTSIDE yylex.
-     *       One obvious solution it to make yy_act a global. I tried that, and saw
-     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
-     *       normally declared as a register variable-- so it is not worth it.
-     */
-    #define  YY_LESS_LINENO(n) \
-            do { \
-                int yyl;\
-                for ( yyl = n; yyl < yyleng; ++yyl )\
-                    if ( yytext[yyl] == '\n' )\
-                        --yylineno;\
-            }while(0)
-    #define YY_LINENO_REWIND_TO(dst) \
-            do {\
-                const char *p;\
-                for ( p = yy_cp-1; p >= (dst); --p)\
-                    if ( *p == '\n' )\
-                        --yylineno;\
-            }while(0)
+    #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -370,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 38
-#define YY_END_OF_BUFFER 39
+#define YY_NUM_RULES 37
+#define YY_END_OF_BUFFER 38
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -381,8 +362,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[187] =
     {   0,
-        0,    0,   39,   38,   36,   16,   37,   37,    7,   15,
-       37,   37,   30,   12,    7,   13,   35,   35,   35,   35,
+        0,    0,   38,   37,   37,   16,   36,   36,    7,   15,
+       36,   36,   30,   12,    7,   13,   35,   35,   35,   35,
        35,   35,   35,   35,   35,   35,   35,   35,   14,    0,
         0,    9,    0,    0,    0,   32,    0,    0,    0,    0,
        31,    0,   28,   29,   29,   30,   11,    8,   10,   35,
@@ -613,12 +594,6 @@ static const flex_int16_t yy_chk[493] =
 
     } ;
 
-/* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[39] =
-    {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0,     };
-
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -642,8 +617,8 @@ char *yytext;
     #include <string>
     
     void yyerror(char *);
-#line 646 "lex.yy.c"
-#line 647 "lex.yy.c"
+#line 621 "lex.yy.c"
+#line 622 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -860,10 +835,10 @@ YY_DECL
 		}
 
 	{
-#line 13 "lexicalAnalyzer.l"
+#line 11 "lexicalAnalyzer.l"
 
 
-#line 867 "lex.yy.c"
+#line 842 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -909,16 +884,6 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
-		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
-			{
-			int yyl;
-			for ( yyl = 0; yyl < yyleng; ++yyl )
-				if ( yytext[yyl] == '\n' )
-					
-    yylineno++;
-;
-			}
-
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -932,197 +897,191 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "lexicalAnalyzer.l"
+#line 13 "lexicalAnalyzer.l"
 {return Constant;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "lexicalAnalyzer.l"
+#line 15 "lexicalAnalyzer.l"
 { yylval.intVal = 0; return INT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "lexicalAnalyzer.l"
+#line 16 "lexicalAnalyzer.l"
 {yylval.intVal = 1; return FLOAT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 19 "lexicalAnalyzer.l"
+#line 17 "lexicalAnalyzer.l"
 {yylval.intVal = 2; return BOOL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "lexicalAnalyzer.l"
+#line 18 "lexicalAnalyzer.l"
 {yylval.intVal = 3; return STRINGG;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 21 "lexicalAnalyzer.l"
+#line 19 "lexicalAnalyzer.l"
 {return VOID;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "lexicalAnalyzer.l"
+#line 21 "lexicalAnalyzer.l"
 { return yytext[0];}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 26 "lexicalAnalyzer.l"
+#line 24 "lexicalAnalyzer.l"
 {return EQUAL;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 27 "lexicalAnalyzer.l"
+#line 25 "lexicalAnalyzer.l"
 {return NOT_EQUAL;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 28 "lexicalAnalyzer.l"
+#line 26 "lexicalAnalyzer.l"
 {return GREATER_EQUAL;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 29 "lexicalAnalyzer.l"
+#line 27 "lexicalAnalyzer.l"
 {return LESS_EQUAL;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 30 "lexicalAnalyzer.l"
+#line 28 "lexicalAnalyzer.l"
 {return LESS_THAN;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 31 "lexicalAnalyzer.l"
+#line 29 "lexicalAnalyzer.l"
 {return GREATER_THAN;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 33 "lexicalAnalyzer.l"
+#line 31 "lexicalAnalyzer.l"
 {return OR;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 34 "lexicalAnalyzer.l"
+#line 32 "lexicalAnalyzer.l"
 {return AND;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 35 "lexicalAnalyzer.l"
+#line 33 "lexicalAnalyzer.l"
 {return NOT;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 38 "lexicalAnalyzer.l"
+#line 36 "lexicalAnalyzer.l"
 {return ELSE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 39 "lexicalAnalyzer.l"
+#line 37 "lexicalAnalyzer.l"
 {return FOR;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 40 "lexicalAnalyzer.l"
+#line 38 "lexicalAnalyzer.l"
 {return DO;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 41 "lexicalAnalyzer.l"
+#line 39 "lexicalAnalyzer.l"
 {return BREAK;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 42 "lexicalAnalyzer.l"
+#line 40 "lexicalAnalyzer.l"
 {return CASE;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 43 "lexicalAnalyzer.l"
+#line 41 "lexicalAnalyzer.l"
 {return FUNC;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 44 "lexicalAnalyzer.l"
+#line 42 "lexicalAnalyzer.l"
 {return DEFAULT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 45 "lexicalAnalyzer.l"
+#line 43 "lexicalAnalyzer.l"
 {return IF;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 46 "lexicalAnalyzer.l"
+#line 44 "lexicalAnalyzer.l"
 {return WHILE;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 47 "lexicalAnalyzer.l"
+#line 45 "lexicalAnalyzer.l"
 {return SWITCH;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 48 "lexicalAnalyzer.l"
+#line 46 "lexicalAnalyzer.l"
 {return RETURN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 50 "lexicalAnalyzer.l"
+#line 48 "lexicalAnalyzer.l"
 {yyerror("invalid sequence\n");} //invalid float number
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 52 "lexicalAnalyzer.l"
+#line 50 "lexicalAnalyzer.l"
 {yylval.floatVal = std::stof(yytext); return floatType;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 53 "lexicalAnalyzer.l"
+#line 51 "lexicalAnalyzer.l"
 {yylval.intVal = atoi(yytext); return intType;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 54 "lexicalAnalyzer.l"
+#line 52 "lexicalAnalyzer.l"
 {yyerror("invalid sequence\n");}
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 55 "lexicalAnalyzer.l"
+#line 53 "lexicalAnalyzer.l"
 {yylval.stringVal = yytext[0]; return stringType;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 56 "lexicalAnalyzer.l"
+#line 54 "lexicalAnalyzer.l"
 {yylval.boolVal = false; return boolType;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 57 "lexicalAnalyzer.l"
+#line 55 "lexicalAnalyzer.l"
 {yylval.boolVal = true; return boolType;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 59 "lexicalAnalyzer.l"
-{yylval.realStringVal = strdup(yytext);  return Identifiers;} // Identifiers
+#line 57 "lexicalAnalyzer.l"
+{yylval.realStringVal = strdup(yytext); printf("Lex iden\n"); return Identifiers;} // Identifiers
 	YY_BREAK
 case 36:
-/* rule 36 can match eol */
 YY_RULE_SETUP
-#line 60 "lexicalAnalyzer.l"
-{ }
+#line 59 "lexicalAnalyzer.l"
+{yyerror("invalid character\n");} //The invalid characters
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 61 "lexicalAnalyzer.l"
-{yyerror("invalid character\n");} //The invalid characters
-	YY_BREAK
-case 38:
-YY_RULE_SETUP
-#line 63 "lexicalAnalyzer.l"
 ECHO;
 	YY_BREAK
-#line 1126 "lex.yy.c"
+#line 1085 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1490,10 +1449,6 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
-    if ( c == '\n' ){
-        --yylineno;
-    }
-
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1570,11 +1525,6 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
-
-	if ( c == '\n' )
-		
-    yylineno++;
-;
 
 	return c;
 }
@@ -2042,9 +1992,6 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
-    /* We do not touch yylineno unless the option is enabled. */
-    yylineno =  1;
-    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -2139,7 +2086,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 63 "lexicalAnalyzer.l"
+#line 61 "lexicalAnalyzer.l"
 
 /*
     To be called at the EOF
