@@ -2,7 +2,10 @@
 #include "Doda.h"
 #include "y.tab.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
+ofstream myfile;
+myfile.open ("loops_quadrables.txt");
 
 static int lbl;
 static int lblSwitch;
@@ -11,8 +14,9 @@ int ex(nodeType *p) {
 
     if (!p) return 0;
     switch(p->type) {
-    case typeCon:       
-        printf("\tpush\t%d\n", p->con.value); 
+    case typeCon:
+        myfile << "push_int\t%d\n", p->con.value;
+        printf("\tpush_int\t%d\n", p->con.value); 
         break;
     case typeArg:
         cout<<"pop "<< p->arg.i<<endl;
@@ -52,7 +56,7 @@ int ex(nodeType *p) {
             printf("L%03d:\n", lbl1 = lbl++);
             ex(p->opr.op[0]);
             ex(p->opr.op[1]);
-            printf("\tjz\tL%03d\n", lbl2 = lbl++);
+            printf("\tjnz\tL%03d\n", lbl2 = lbl++);
             printf("\tjmp\tL%03d\n", lbl1);
             printf("L%03d:\n", lbl2);
         break;
@@ -69,7 +73,7 @@ int ex(nodeType *p) {
         break;
         case CASE:
             ex(p->opr.op[0]);//push 0 from case 0: in stack
-            cout<<"compNE"<< endl;L001:
+            cout<<"compNE"<< endl;
             printf("\tjz\tL%03d\n", lbl1 = lbl++);
             ex(p->opr.op[1]);
             //printf("\tjmp\tL%03d\n", lblSwitch );
@@ -81,7 +85,7 @@ int ex(nodeType *p) {
             ex(p->opr.op[0]); //int i = 0
             printf("L%03d:\n", lbl1 = lbl++);
             ex(p->opr.op[1]);//i < 0
-            printf("\tjz\tL%03d\n", lbl2 = lbl++);
+            printf("\tjnz\tL%03d\n", lbl2 = lbl++);
             ex(p->opr.op[3]);
             ex(p->opr.op[2]);
             printf("\tjmp\tL%03d\n", lbl1);
@@ -90,7 +94,7 @@ int ex(nodeType *p) {
         case WHILE:
             printf("L%03d:\n", lbl1 = lbl++);
             ex(p->opr.op[0]);
-            printf("\tjz\tL%03d\n", lbl2 = lbl++);
+            printf("\tjnz\tL%03d\n", lbl2 = lbl++);
             ex(p->opr.op[1]);
             printf("\tjmp\tL%03d\n", lbl1);
             printf("L%03d:\n", lbl2);
@@ -99,7 +103,7 @@ int ex(nodeType *p) {
             ex(p->opr.op[0]); // IF STATMENT 
             if (p->opr.nops > 2) {
                 /* if else */
-                printf("\tjz\tL%03d\n", lbl1 = lbl++); //jz L0
+                printf("\tjnz\tL%03d\n", lbl1 = lbl++); //jz L0
                 ex(p->opr.op[1]);                      //if body
                 printf("\tjmp\tL%03d\n", lbl2 = lbl++);// jmp L1
                 printf("L%03d:\n", lbl1);              //L0
@@ -107,7 +111,7 @@ int ex(nodeType *p) {
                 printf("L%03d:\n", lbl2);               //L1
             } else {
                 /* if */
-                printf("\tjz\tL%03d\n", lbl1 = lbl++);
+                printf("\tjnz\tL%03d\n", lbl1 = lbl++);
                 ex(p->opr.op[1]);
                 printf("L%03d:\n", lbl1);
             }
