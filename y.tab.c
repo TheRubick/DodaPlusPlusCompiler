@@ -95,25 +95,11 @@ extern int yylineno;
      /*
     Symbol Table
 */
-    DodaSymbolTable symbolTable;
-    // symbolTable->addBlock(); // global block
-    // bool inital = true;
-    // void closeGlobal()
-    // { 
-    //     if(inital)
-    //     {
-    //       symbolTable.closeBlock(); 
-    //       printf("close global block \n");
-    //     }
-
-    //     // printf("record = %s",symbolTable.currentRecord.type);
-
-    //     inital = false;
-      
-    // }
+    // DodaSymbolTable symbolTable;
+    DodaSymbolTable symbolTable ;
 
 
-#line 117 "y.tab.c"
+#line 103 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -156,7 +142,7 @@ extern int yylineno;
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 48 "syntaxAnalyzer.y"
+#line 34 "syntaxAnalyzer.y"
  
      #include "./Doda.h" 
      #define YYDEBUG 1 // This is new
@@ -164,7 +150,7 @@ extern int yydebug;
      
      
 
-#line 168 "y.tab.c"
+#line 154 "y.tab.c"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -243,7 +229,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 55 "syntaxAnalyzer.y"
+#line 41 "syntaxAnalyzer.y"
 
     int intVal;
     float floatVal;
@@ -252,7 +238,7 @@ union YYSTYPE
     char* realStringVal;
     nodeType *nPtr;             /* node pointer */
 
-#line 256 "y.tab.c"
+#line 242 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -630,15 +616,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   128,   128,   129,   133,   134,   135,   136,   139,   139,
-     142,   143,   144,   145,   146,   147,   148,   149,   150,   151,
-     152,   153,   156,   159,   160,   163,   166,   176,   178,   179,
-     179,   182,   185,   188,   188,   191,   191,   192,   195,   200,
-     207,   210,   210,   211,   211,   214,   215,   216,   217,   219,
-     220,   226,   233,   234,   235,   238,   241,   244,   247,   252,
-     253,   254,   255,   258,   259,   260,   261,   262,   264,   265,
-     267,   268,   269,   270,   271,   272,   273,   274,   275,   276,
-     277,   278,   279,   280
+       0,   114,   114,   115,   119,   120,   121,   122,   125,   125,
+     128,   129,   130,   131,   132,   133,   134,   135,   136,   137,
+     138,   139,   142,   145,   146,   150,   156,   166,   168,   169,
+     169,   172,   175,   178,   178,   181,   181,   182,   185,   190,
+     197,   200,   200,   201,   201,   204,   205,   206,   207,   209,
+     210,   216,   223,   224,   225,   228,   231,   234,   237,   242,
+     243,   244,   245,   248,   249,   250,   251,   252,   254,   255,
+     257,   258,   259,   260,   261,   262,   263,   264,   265,   266,
+     267,   268,   269,   270
 };
 #endif
 
@@ -1627,517 +1613,517 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 128 "syntaxAnalyzer.y"
+#line 114 "syntaxAnalyzer.y"
                                     { ex((yyvsp[0].nPtr));  }
-#line 1633 "y.tab.c"
+#line 1619 "y.tab.c"
     break;
 
   case 4:
-#line 133 "syntaxAnalyzer.y"
+#line 119 "syntaxAnalyzer.y"
                                    { (yyval.nPtr) = opr(';',2,(yyvsp[-1].nPtr),(yyvsp[0].nPtr)); printf("Statment statments \n");}
-#line 1639 "y.tab.c"
+#line 1625 "y.tab.c"
     break;
 
   case 5:
-#line 134 "syntaxAnalyzer.y"
+#line 120 "syntaxAnalyzer.y"
                                    { (yyval.nPtr) = (yyvsp[0].nPtr); printf("statement\n"); }
-#line 1645 "y.tab.c"
+#line 1631 "y.tab.c"
     break;
 
   case 6:
-#line 135 "syntaxAnalyzer.y"
-                                    { (yyval.nPtr) = opr(';',2,(yyvsp[-1].nPtr),(yyvsp[0].nPtr)); printf("statement block statment\n");}
-#line 1651 "y.tab.c"
+#line 121 "syntaxAnalyzer.y"
+                                    { (yyval.nPtr) = opr(';',2,(yyvsp[-1].nPtr),(yyvsp[0].nPtr)); printf("statement block statment\n"); printf("statement block_statment\n");}
+#line 1637 "y.tab.c"
     break;
 
   case 7:
-#line 136 "syntaxAnalyzer.y"
+#line 122 "syntaxAnalyzer.y"
                                     {  (yyval.nPtr) = (yyvsp[0].nPtr);printf("block statment \n");}
-#line 1657 "y.tab.c"
+#line 1643 "y.tab.c"
     break;
 
   case 8:
-#line 139 "syntaxAnalyzer.y"
+#line 125 "syntaxAnalyzer.y"
                  {symbolTable.addBlock();}
-#line 1663 "y.tab.c"
+#line 1649 "y.tab.c"
     break;
 
   case 9:
-#line 139 "syntaxAnalyzer.y"
-                                                              { (yyval.nPtr) = (yyvsp[-1].nPtr); symbolTable.closeBlock(); printf("close block two\n"); }
-#line 1669 "y.tab.c"
+#line 125 "syntaxAnalyzer.y"
+                                                             { (yyval.nPtr) = (yyvsp[-1].nPtr); symbolTable.closeBlock(); printf("block_statment **** trace\n");; }
+#line 1655 "y.tab.c"
     break;
 
   case 10:
-#line 142 "syntaxAnalyzer.y"
+#line 128 "syntaxAnalyzer.y"
                 {(yyval.nPtr) = opr(';',2,NULL,NULL);}
-#line 1675 "y.tab.c"
+#line 1661 "y.tab.c"
     break;
 
   case 11:
-#line 143 "syntaxAnalyzer.y"
+#line 129 "syntaxAnalyzer.y"
                            {(yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 1681 "y.tab.c"
+#line 1667 "y.tab.c"
     break;
 
   case 12:
-#line 144 "syntaxAnalyzer.y"
-                           {(yyval.nPtr) = (yyvsp[0].nPtr);}
-#line 1687 "y.tab.c"
+#line 130 "syntaxAnalyzer.y"
+                           {(yyval.nPtr) = (yyvsp[0].nPtr); printf("if_statment **** trace\n");}
+#line 1673 "y.tab.c"
     break;
 
   case 13:
-#line 145 "syntaxAnalyzer.y"
+#line 131 "syntaxAnalyzer.y"
                            {(yyval.nPtr) = (yyvsp[0].nPtr);}
-#line 1693 "y.tab.c"
+#line 1679 "y.tab.c"
     break;
 
   case 14:
-#line 146 "syntaxAnalyzer.y"
+#line 132 "syntaxAnalyzer.y"
                                   {(yyval.nPtr) = (yyvsp[-1].nPtr);}
-#line 1699 "y.tab.c"
+#line 1685 "y.tab.c"
     break;
 
   case 15:
-#line 147 "syntaxAnalyzer.y"
+#line 133 "syntaxAnalyzer.y"
                              {(yyval.nPtr) = (yyvsp[0].nPtr);}
-#line 1705 "y.tab.c"
+#line 1691 "y.tab.c"
     break;
 
   case 16:
-#line 148 "syntaxAnalyzer.y"
+#line 134 "syntaxAnalyzer.y"
                                      {(yyval.nPtr) = (yyvsp[0].nPtr);}
-#line 1711 "y.tab.c"
+#line 1697 "y.tab.c"
     break;
 
   case 17:
-#line 149 "syntaxAnalyzer.y"
+#line 135 "syntaxAnalyzer.y"
                                      {(yyval.nPtr) = (yyvsp[-1].nPtr); symbolTable.addRecord();}
-#line 1717 "y.tab.c"
+#line 1703 "y.tab.c"
     break;
 
   case 18:
-#line 150 "syntaxAnalyzer.y"
-                                    {(yyval.nPtr) = (yyvsp[-1].nPtr);}
-#line 1723 "y.tab.c"
+#line 136 "syntaxAnalyzer.y"
+                                    {(yyval.nPtr) = (yyvsp[-1].nPtr); printf("expression_statment **** trace\n");}
+#line 1709 "y.tab.c"
     break;
 
   case 19:
-#line 151 "syntaxAnalyzer.y"
+#line 137 "syntaxAnalyzer.y"
                                         { (yyval.nPtr) =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
-#line 1729 "y.tab.c"
+#line 1715 "y.tab.c"
     break;
 
   case 20:
-#line 152 "syntaxAnalyzer.y"
+#line 138 "syntaxAnalyzer.y"
                                         { (yyval.nPtr) =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
-#line 1735 "y.tab.c"
+#line 1721 "y.tab.c"
     break;
 
   case 21:
-#line 153 "syntaxAnalyzer.y"
+#line 139 "syntaxAnalyzer.y"
                                         { (yyval.nPtr) =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; }
-#line 1741 "y.tab.c"
+#line 1727 "y.tab.c"
     break;
 
   case 22:
-#line 156 "syntaxAnalyzer.y"
+#line 142 "syntaxAnalyzer.y"
                                                                   {(yyval.nPtr) = opr(WHILE,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 1747 "y.tab.c"
+#line 1733 "y.tab.c"
     break;
 
   case 23:
-#line 159 "syntaxAnalyzer.y"
+#line 145 "syntaxAnalyzer.y"
                          { (yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 1753 "y.tab.c"
+#line 1739 "y.tab.c"
     break;
 
   case 24:
-#line 160 "syntaxAnalyzer.y"
+#line 146 "syntaxAnalyzer.y"
                           {(yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 1759 "y.tab.c"
+#line 1745 "y.tab.c"
     break;
 
   case 25:
-#line 163 "syntaxAnalyzer.y"
-                                                                                             {(yyval.nPtr)=opr(IF,3, (yyvsp[-4].nPtr), (yyvsp[-2].nPtr), (yyvsp[0].nPtr)); printf("matched if\n"); }
-#line 1765 "y.tab.c"
+#line 150 "syntaxAnalyzer.y"
+                                                                                            {(yyval.nPtr)=opr(IF,3, (yyvsp[-4].nPtr), (yyvsp[-2].nPtr), (yyvsp[0].nPtr)); printf("matched if with block \n"); }
+#line 1751 "y.tab.c"
     break;
 
   case 26:
-#line 166 "syntaxAnalyzer.y"
+#line 156 "syntaxAnalyzer.y"
                                                                                     {(yyval.nPtr)=opr(IF,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr)); printf("un_matched if\n");}
-#line 1771 "y.tab.c"
+#line 1757 "y.tab.c"
     break;
 
   case 27:
-#line 176 "syntaxAnalyzer.y"
+#line 166 "syntaxAnalyzer.y"
                                                                                                       {(yyval.nPtr) = opr(FOR,4,(yyvsp[-6].nPtr),(yyvsp[-4].nPtr),(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 1777 "y.tab.c"
+#line 1763 "y.tab.c"
     break;
 
   case 28:
-#line 178 "syntaxAnalyzer.y"
+#line 168 "syntaxAnalyzer.y"
                                   {(yyval.nPtr)=(yyvsp[0].nPtr);}
-#line 1783 "y.tab.c"
+#line 1769 "y.tab.c"
     break;
 
   case 29:
-#line 179 "syntaxAnalyzer.y"
+#line 169 "syntaxAnalyzer.y"
               {symbolTable.forFlag = true;}
-#line 1789 "y.tab.c"
+#line 1775 "y.tab.c"
     break;
 
   case 30:
-#line 179 "syntaxAnalyzer.y"
+#line 169 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr)=(yyvsp[0].nPtr);}
-#line 1795 "y.tab.c"
+#line 1781 "y.tab.c"
     break;
 
   case 31:
-#line 182 "syntaxAnalyzer.y"
+#line 172 "syntaxAnalyzer.y"
                                                                        {(yyval.nPtr) = opr(DO,2,(yyvsp[-4].nPtr),(yyvsp[-1].nPtr));}
-#line 1801 "y.tab.c"
+#line 1787 "y.tab.c"
     break;
 
   case 32:
-#line 185 "syntaxAnalyzer.y"
+#line 175 "syntaxAnalyzer.y"
                                                             {(yyval.nPtr)=opr(SWITCH,2,id((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr));}
-#line 1807 "y.tab.c"
+#line 1793 "y.tab.c"
     break;
 
   case 33:
-#line 188 "syntaxAnalyzer.y"
+#line 178 "syntaxAnalyzer.y"
                {symbolTable.addBlock();}
-#line 1813 "y.tab.c"
+#line 1799 "y.tab.c"
     break;
 
   case 34:
-#line 188 "syntaxAnalyzer.y"
+#line 178 "syntaxAnalyzer.y"
                                                                              {(yyval.nPtr) =opr(CASE,2,con((yyvsp[-4].intVal)),(yyvsp[-2].nPtr)); symbolTable.closeBlock();}
-#line 1819 "y.tab.c"
+#line 1805 "y.tab.c"
     break;
 
   case 35:
-#line 191 "syntaxAnalyzer.y"
+#line 181 "syntaxAnalyzer.y"
                 {symbolTable.addBlock();}
-#line 1825 "y.tab.c"
+#line 1811 "y.tab.c"
     break;
 
   case 36:
-#line 191 "syntaxAnalyzer.y"
+#line 181 "syntaxAnalyzer.y"
                                                                {(yyval.nPtr) = opr(DEFAULT,1,(yyvsp[0].nPtr));symbolTable.closeBlock();}
-#line 1831 "y.tab.c"
+#line 1817 "y.tab.c"
     break;
 
   case 37:
-#line 192 "syntaxAnalyzer.y"
+#line 182 "syntaxAnalyzer.y"
                                              {(yyval.nPtr) = opr(';',2,(yyvsp[-1].nPtr),(yyvsp[0].nPtr));}
-#line 1837 "y.tab.c"
+#line 1823 "y.tab.c"
     break;
 
   case 38:
-#line 195 "syntaxAnalyzer.y"
+#line 185 "syntaxAnalyzer.y"
                                                                                          {(yyval.nPtr)=opr(FUNC,3,id((yyvsp[-4].realStringVal)),(yyvsp[-2].nPtr),(yyvsp[0].nPtr)); 
                             symbolTable.currentRecord.type = "void";
                             symbolTable.currentRecord.name = (yyvsp[-4].realStringVal);
                             symbolTable.currentRecord.kind = "func";
                             symbolTable.addRecord();}
-#line 1847 "y.tab.c"
+#line 1833 "y.tab.c"
     break;
 
   case 39:
-#line 200 "syntaxAnalyzer.y"
+#line 190 "syntaxAnalyzer.y"
                                                                                                      {(yyval.nPtr)=opr(FUNC,3,id((yyvsp[-4].realStringVal)),(yyvsp[-2].nPtr),(yyvsp[0].nPtr));
                             symbolTable.currentRecord.name = (yyvsp[-4].realStringVal);
                             symbolTable.currentRecord.kind = "func";
                             symbolTable.addRecord();
                             }
-#line 1857 "y.tab.c"
+#line 1843 "y.tab.c"
     break;
 
   case 40:
-#line 207 "syntaxAnalyzer.y"
+#line 197 "syntaxAnalyzer.y"
                                                   {(yyval.nPtr) = opr(RETURN,1,(yyvsp[-1].nPtr));}
-#line 1863 "y.tab.c"
+#line 1849 "y.tab.c"
     break;
 
   case 41:
-#line 210 "syntaxAnalyzer.y"
+#line 200 "syntaxAnalyzer.y"
                        {symbolTable.addBlock();}
-#line 1869 "y.tab.c"
+#line 1855 "y.tab.c"
     break;
 
   case 42:
-#line 210 "syntaxAnalyzer.y"
+#line 200 "syntaxAnalyzer.y"
                                                                          {(yyval.nPtr)=(yyvsp[-1].nPtr);symbolTable.closeBlock();}
-#line 1875 "y.tab.c"
+#line 1861 "y.tab.c"
     break;
 
   case 43:
-#line 211 "syntaxAnalyzer.y"
+#line 201 "syntaxAnalyzer.y"
                         {symbolTable.addBlock();}
-#line 1881 "y.tab.c"
+#line 1867 "y.tab.c"
     break;
 
   case 44:
-#line 211 "syntaxAnalyzer.y"
+#line 201 "syntaxAnalyzer.y"
                                                                                      {(yyval.nPtr) = opr(';',2,(yyvsp[-2].nPtr),(yyvsp[-1].nPtr));symbolTable.closeBlock();}
-#line 1887 "y.tab.c"
+#line 1873 "y.tab.c"
     break;
 
   case 45:
-#line 214 "syntaxAnalyzer.y"
+#line 204 "syntaxAnalyzer.y"
                {(yyval.intVal) = (yyvsp[0].intVal);symbolTable.currentRecord.type = "int";}
-#line 1893 "y.tab.c"
+#line 1879 "y.tab.c"
     break;
 
   case 46:
-#line 215 "syntaxAnalyzer.y"
+#line 205 "syntaxAnalyzer.y"
                  {(yyval.intVal) = (yyvsp[0].intVal);symbolTable.currentRecord.type = "float";}
-#line 1899 "y.tab.c"
+#line 1885 "y.tab.c"
     break;
 
   case 47:
-#line 216 "syntaxAnalyzer.y"
+#line 206 "syntaxAnalyzer.y"
                 {(yyval.intVal) = (yyvsp[0].intVal);symbolTable.currentRecord.type = "bool";}
-#line 1905 "y.tab.c"
+#line 1891 "y.tab.c"
     break;
 
   case 48:
-#line 217 "syntaxAnalyzer.y"
+#line 207 "syntaxAnalyzer.y"
                    {(yyval.intVal) = (yyvsp[0].intVal);symbolTable.currentRecord.type = "char";}
-#line 1911 "y.tab.c"
+#line 1897 "y.tab.c"
     break;
 
   case 49:
-#line 219 "syntaxAnalyzer.y"
+#line 209 "syntaxAnalyzer.y"
                     {(yyval.nPtr) = opr(';',2,NULL,NULL);}
-#line 1917 "y.tab.c"
+#line 1903 "y.tab.c"
     break;
 
   case 50:
-#line 220 "syntaxAnalyzer.y"
+#line 210 "syntaxAnalyzer.y"
                                      {(yyval.nPtr) = arg((yyvsp[0].realStringVal));
              printf("inside func def arguments case 1 \n");
              symbolTable.currentRecord.name = (yyvsp[0].realStringVal);
              symbolTable.currentRecord.kind = "par";
              symbolTable.funcFlag = true;
              symbolTable.addToFunc();}
-#line 1928 "y.tab.c"
+#line 1914 "y.tab.c"
     break;
 
   case 51:
-#line 226 "syntaxAnalyzer.y"
+#line 216 "syntaxAnalyzer.y"
                                                             {(yyval.nPtr) = opr(';',2,(yyvsp[-3].nPtr),arg((yyvsp[0].realStringVal)));
               printf("inside func def arguments case 2 \n");
              symbolTable.currentRecord.name = (yyvsp[0].realStringVal);
              symbolTable.currentRecord.kind = "par";
              symbolTable.funcFlag = true;
              symbolTable.addToFunc();}
-#line 1939 "y.tab.c"
+#line 1925 "y.tab.c"
     break;
 
   case 52:
-#line 233 "syntaxAnalyzer.y"
+#line 223 "syntaxAnalyzer.y"
            {(yyval.nPtr) = opr(';',2,NULL,NULL);}
-#line 1945 "y.tab.c"
+#line 1931 "y.tab.c"
     break;
 
   case 53:
-#line 234 "syntaxAnalyzer.y"
+#line 224 "syntaxAnalyzer.y"
                                {(yyval.nPtr) = (yyvsp[0].nPtr);}
-#line 1951 "y.tab.c"
+#line 1937 "y.tab.c"
     break;
 
   case 54:
-#line 235 "syntaxAnalyzer.y"
+#line 225 "syntaxAnalyzer.y"
                                                {(yyval.nPtr) = opr(';',2,(yyvsp[0].nPtr),(yyvsp[-2].nPtr));}
-#line 1957 "y.tab.c"
+#line 1943 "y.tab.c"
     break;
 
   case 55:
-#line 238 "syntaxAnalyzer.y"
+#line 228 "syntaxAnalyzer.y"
                                                   {(yyval.nPtr) = opr(FUNC,2,id((yyvsp[-3].realStringVal)),(yyvsp[-1].nPtr));}
-#line 1963 "y.tab.c"
+#line 1949 "y.tab.c"
     break;
 
   case 56:
-#line 241 "syntaxAnalyzer.y"
+#line 231 "syntaxAnalyzer.y"
                                              {(yyval.nPtr) = opr(';',2,NULL,NULL); 
                     symbolTable.currentRecord.kind = "Var";
                     symbolTable.currentRecord.name = (yyvsp[0].realStringVal);}
-#line 1971 "y.tab.c"
+#line 1957 "y.tab.c"
     break;
 
   case 57:
-#line 244 "syntaxAnalyzer.y"
+#line 234 "syntaxAnalyzer.y"
                                                                      {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr)); 
                     symbolTable.currentRecord.kind = "Var";
                     symbolTable.currentRecord.name = (yyvsp[-2].realStringVal);}
-#line 1979 "y.tab.c"
+#line 1965 "y.tab.c"
     break;
 
   case 58:
-#line 247 "syntaxAnalyzer.y"
+#line 237 "syntaxAnalyzer.y"
                                                                               {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr));
                     symbolTable.currentRecord.kind = "Const";
                     symbolTable.currentRecord.name = (yyvsp[-2].realStringVal);}
-#line 1987 "y.tab.c"
+#line 1973 "y.tab.c"
     break;
 
   case 59:
-#line 252 "syntaxAnalyzer.y"
+#line 242 "syntaxAnalyzer.y"
                {(yyval.nPtr) = con((yyvsp[0].intVal));}
-#line 1993 "y.tab.c"
+#line 1979 "y.tab.c"
     break;
 
   case 60:
-#line 253 "syntaxAnalyzer.y"
+#line 243 "syntaxAnalyzer.y"
                  {(yyval.nPtr) = conF((yyvsp[0].floatVal));}
-#line 1999 "y.tab.c"
+#line 1985 "y.tab.c"
     break;
 
   case 61:
-#line 254 "syntaxAnalyzer.y"
+#line 244 "syntaxAnalyzer.y"
                 {(yyval.nPtr) = conB((yyvsp[0].boolVal)); }
-#line 2005 "y.tab.c"
+#line 1991 "y.tab.c"
     break;
 
   case 62:
-#line 255 "syntaxAnalyzer.y"
+#line 245 "syntaxAnalyzer.y"
                   {(yyval.nPtr) = conC((yyvsp[0].stringVal));}
-#line 2011 "y.tab.c"
+#line 1997 "y.tab.c"
     break;
 
   case 63:
-#line 258 "syntaxAnalyzer.y"
+#line 248 "syntaxAnalyzer.y"
                                                   {(yyval.nPtr) = (yyvsp[-1].nPtr);}
-#line 2017 "y.tab.c"
+#line 2003 "y.tab.c"
     break;
 
   case 64:
-#line 259 "syntaxAnalyzer.y"
-                                  {(yyval.nPtr) =id((yyvsp[0].realStringVal)); }
-#line 2023 "y.tab.c"
+#line 249 "syntaxAnalyzer.y"
+                                  {(yyval.nPtr) =id((yyvsp[0].realStringVal)); printf("Identifiers **** trace\n");}
+#line 2009 "y.tab.c"
     break;
 
   case 65:
-#line 260 "syntaxAnalyzer.y"
+#line 250 "syntaxAnalyzer.y"
                             { (yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 2029 "y.tab.c"
+#line 2015 "y.tab.c"
     break;
 
   case 66:
-#line 261 "syntaxAnalyzer.y"
+#line 251 "syntaxAnalyzer.y"
                                          { (yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 2035 "y.tab.c"
+#line 2021 "y.tab.c"
     break;
 
   case 67:
-#line 262 "syntaxAnalyzer.y"
-                                              {(yyval.nPtr) = (yyvsp[0].nPtr); }
-#line 2041 "y.tab.c"
+#line 252 "syntaxAnalyzer.y"
+                                              {(yyval.nPtr) = (yyvsp[0].nPtr); printf("expression lvo **** trace\n");}
+#line 2027 "y.tab.c"
     break;
 
   case 68:
-#line 264 "syntaxAnalyzer.y"
-                                                             {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr)); ;}
-#line 2047 "y.tab.c"
+#line 254 "syntaxAnalyzer.y"
+                                                             {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr)); printf("$identifire = expression_statment $\n"); }
+#line 2033 "y.tab.c"
     break;
 
   case 69:
-#line 265 "syntaxAnalyzer.y"
+#line 255 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('+',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr)); }
-#line 2053 "y.tab.c"
+#line 2039 "y.tab.c"
     break;
 
   case 70:
-#line 267 "syntaxAnalyzer.y"
+#line 257 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('-',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2059 "y.tab.c"
+#line 2045 "y.tab.c"
     break;
 
   case 71:
-#line 268 "syntaxAnalyzer.y"
+#line 258 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('*',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2065 "y.tab.c"
+#line 2051 "y.tab.c"
     break;
 
   case 72:
-#line 269 "syntaxAnalyzer.y"
+#line 259 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('/',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2071 "y.tab.c"
+#line 2057 "y.tab.c"
     break;
 
   case 73:
-#line 270 "syntaxAnalyzer.y"
+#line 260 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('%',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2077 "y.tab.c"
+#line 2063 "y.tab.c"
     break;
 
   case 74:
-#line 271 "syntaxAnalyzer.y"
+#line 261 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr('^',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2083 "y.tab.c"
+#line 2069 "y.tab.c"
     break;
 
   case 75:
-#line 272 "syntaxAnalyzer.y"
+#line 262 "syntaxAnalyzer.y"
                                                                  {(yyval.nPtr) = opr(AND,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2089 "y.tab.c"
+#line 2075 "y.tab.c"
     break;
 
   case 76:
-#line 273 "syntaxAnalyzer.y"
+#line 263 "syntaxAnalyzer.y"
                                                                 {(yyval.nPtr) = opr(OR,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2095 "y.tab.c"
+#line 2081 "y.tab.c"
     break;
 
   case 77:
-#line 274 "syntaxAnalyzer.y"
+#line 264 "syntaxAnalyzer.y"
                                                                           {(yyval.nPtr) = opr(GREATER_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2101 "y.tab.c"
+#line 2087 "y.tab.c"
     break;
 
   case 78:
-#line 275 "syntaxAnalyzer.y"
+#line 265 "syntaxAnalyzer.y"
                                                                            {(yyval.nPtr) = opr(GREATER_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2107 "y.tab.c"
+#line 2093 "y.tab.c"
     break;
 
   case 79:
-#line 276 "syntaxAnalyzer.y"
+#line 266 "syntaxAnalyzer.y"
                                                                        {(yyval.nPtr) = opr(LESS_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2113 "y.tab.c"
+#line 2099 "y.tab.c"
     break;
 
   case 80:
-#line 277 "syntaxAnalyzer.y"
+#line 267 "syntaxAnalyzer.y"
                                                                         {(yyval.nPtr) = opr(LESS_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2119 "y.tab.c"
+#line 2105 "y.tab.c"
     break;
 
   case 81:
-#line 278 "syntaxAnalyzer.y"
+#line 268 "syntaxAnalyzer.y"
                                                                    {(yyval.nPtr) = opr(EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2125 "y.tab.c"
+#line 2111 "y.tab.c"
     break;
 
   case 82:
-#line 279 "syntaxAnalyzer.y"
+#line 269 "syntaxAnalyzer.y"
                                                                        {(yyval.nPtr) = opr(NOT_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
-#line 2131 "y.tab.c"
+#line 2117 "y.tab.c"
     break;
 
   case 83:
-#line 280 "syntaxAnalyzer.y"
+#line 270 "syntaxAnalyzer.y"
                                              {(yyval.nPtr) = opr(NOT,1,(yyvsp[0].nPtr));}
-#line 2137 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
 
-#line 2141 "y.tab.c"
+#line 2127 "y.tab.c"
 
       default: break;
     }
@@ -2369,7 +2355,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 282 "syntaxAnalyzer.y"
+#line 272 "syntaxAnalyzer.y"
 
 
 nodeType *con(int value) {

@@ -44,7 +44,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 48 "syntaxAnalyzer.y"
+#line 34 "syntaxAnalyzer.y"
  
      #include "./Doda.h" 
      #define YYDEBUG 1 // This is new
@@ -131,7 +131,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 55 "syntaxAnalyzer.y"
+#line 41 "syntaxAnalyzer.y"
 
     int intVal;
     float floatVal;

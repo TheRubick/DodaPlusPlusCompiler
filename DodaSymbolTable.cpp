@@ -44,9 +44,15 @@ public:
         blockNode b;
         b.parent = currentBlock;
         blocksNum++;
+        cout << "add block bla bla   " << endl;
         SymbolTable["block" + to_string(blocksNum)] = b;
-        SymbolTable[currentBlock].childs.push_back("block" + to_string(blocksNum)); //add child to parent
-        currentBlock = "block" + to_string(blocksNum);                              // from parent to child
+        cout << "add block bla   " << endl;
+         vector<string> childreen ;
+        childreen = SymbolTable[currentBlock].childs;
+        string blockName = "block" + to_string(blocksNum);
+        childreen.push_back(blockName);
+        // SymbolTable[currentBlock].childs.push_back("block" + to_string(blocksNum)); //add child to parent
+       currentBlock = "block" + to_string(blocksNum);                              // from parent to child
         if (funcFlag)
         {
             addRecordFunc();
@@ -58,6 +64,9 @@ public:
             forFlag =  false;
             addRecord();
         }
+
+        cout << "leave function    " << endl;
+
     }
     void closeBlock()
     {
@@ -70,7 +79,6 @@ public:
         cout << "name " << currentRecord.name << endl;
         cout << "Kind  " << currentRecord.kind << endl;
 
-        cout << "add record bla bla bla  " << endl;
 
         if (!forFlag)
         {
@@ -102,6 +110,12 @@ public:
         }
         cout << "**************************************************\n";
     }
+
+    void dummyPrint()
+    {
+        cout<< "dummy print fuck you man heheheheheheh"<<endl;
+    }
+
     void printBlock(blockNode b)
     {
 

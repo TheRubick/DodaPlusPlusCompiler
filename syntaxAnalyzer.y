@@ -26,22 +26,8 @@ extern int yylineno;
      /*
     Symbol Table
 */
-    DodaSymbolTable symbolTable;
-    // symbolTable->addBlock(); // global block
-    // bool inital = true;
-    // void closeGlobal()
-    // { 
-    //     if(inital)
-    //     {
-    //       symbolTable.closeBlock(); 
-    //       printf("close global block \n");
-    //     }
-
-    //     // printf("record = %s",symbolTable.currentRecord.type);
-
-    //     inital = false;
-      
-    // }
+    // DodaSymbolTable symbolTable;
+    DodaSymbolTable symbolTable ;
 
 %}
 
@@ -132,22 +118,22 @@ program:  program statments         { ex($2);  }
 statments: 
           statments statment       { $$ = opr(';',2,$1,$2); printf("Statment statments \n");}
         | statment                 { $$ = $1; printf("statement\n"); }       
-        |  statments block_statment { $$ = opr(';',2,$1,$2); printf("statement block statment\n");}
+        |  statments block_statment { $$ = opr(';',2,$1,$2); printf("statement block statment\n"); printf("statement block_statment\n");}
         |  block_statment           {  $$ = $1;printf("block statment \n");}
         ;
 
-block_statment:  {symbolTable.addBlock();} '{' statments '}'  { $$ = $3; symbolTable.closeBlock(); printf("close block two\n"); } 
+block_statment:  {symbolTable.addBlock();}'{' statments '}'  { $$ = $3; symbolTable.closeBlock(); printf("block_statment **** trace\n");; } 
                     ;
 
 statment:   ';' {$$ = opr(';',2,NULL,NULL);}
         |   while_statment {$$ = $1; }
-        |   if_statment    {$$ = $1;}
+        |   if_statment    {$$ = $1; printf("if_statment **** trace\n");}
         |   for_statment   {$$ = $1;}
         |   do_while_statment ';' {$$ = $1;}
         |   switch_statment  {$$ = $1;}
         |   func_defintion_statment  {$$ = $1;}
         |   var_declare_statment ';' {$$ = $1; symbolTable.addRecord();}
-        |   expression_statment ';' {$$ = $1;} 
+        |   expression_statment ';' {$$ = $1; printf("expression_statment **** trace\n");} 
         |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
         |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
         |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; } 
@@ -160,7 +146,11 @@ if_statment: matched_if  { $$ = $1; }
            | unmatched_if {$$ = $1; }
            ;
 
-matched_if: IF '(' expression_statment ')' block_statment ELSE block_statment  %prec ifpred  {$$=opr(IF,3, $3, $5, $7); printf("matched if\n"); }
+
+matched_if: IF '(' expression_statment ')' block_statment ELSE block_statment %prec ifpred  {$$=opr(IF,3, $3, $5, $7); printf("matched if with block \n"); }
+        ;
+
+//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE block_statment   {$$=opr(IF,3, $3, $6, $9); printf("matched if\n"); }
         ;
 
 unmatched_if: IF '(' expression_statment ')' block_statment                         {$$=opr(IF,2,$3,$5); printf("un_matched if\n");}
@@ -256,12 +246,12 @@ value: intType {$$ = con($1);}
      ;
 
 expression_statment: '(' expression_statment ')'  {$$ = $2;} 
-                    | Identifiers {$$ =id($1); }
+                    | Identifiers {$$ =id($1); printf("Identifiers **** trace\n");}
                     | value { $$ = $1; }
                     | func_call_statment { $$ = $1; }
-                    | expression_statment_lv0 {$$ = $1; }
+                    | expression_statment_lv0 {$$ = $1; printf("expression lvo **** trace\n");}
                     ;             
-expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); ;}
+expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); printf("$identifire = expression_statment $\n"); }
                    | expression_statment '+' expression_statment {$$ = opr('+',2,$1,$3); } 
                    
                    | expression_statment '-' expression_statment {$$ = opr('-',2,$1,$3);}
