@@ -2,10 +2,10 @@
 #include "Doda.h"
 #include "y.tab.h"
 #include <iostream>
-#include <fstream>
+
 using namespace std;
-ofstream myfile;
-myfile.open ("loops_quadrables.txt");
+
+
 
 static int lbl;
 static int lblSwitch;
@@ -15,7 +15,7 @@ int ex(nodeType *p) {
     if (!p) return 0;
     switch(p->type) {
     case typeCon:
-        myfile << "push_int\t%d\n", p->con.value;
+        
         printf("\tpush_int\t%d\n", p->con.value); 
         break;
     case typeArg:
