@@ -8,6 +8,8 @@
     void yyerror(char *);
 %}
 
+%option yylineno
+
 %%
 
 "const" {return Constant;}
@@ -55,7 +57,7 @@
 "true" {yylval.boolVal = true; return boolType;}
 
 [a-zA-Z\_][0-9a-zA-Z\_]* {yylval.realStringVal = strdup(yytext); return Identifiers;} // Identifiers
-
+\n { }
 [\#\?\@\~\.\[\]\\\`\"\']   {yyerror("invalid character\n");} //The invalid characters
 
 %%
