@@ -1069,7 +1069,7 @@ YY_RULE_SETUP
 case 35:
 YY_RULE_SETUP
 #line 57 "lexicalAnalyzer.l"
-{yylval.realStringVal = strdup(yytext); printf("Lex iden\n"); return Identifiers;} // Identifiers
+{yylval.realStringVal = strdup(yytext); return Identifiers;} // Identifiers
 	YY_BREAK
 case 36:
 YY_RULE_SETUP

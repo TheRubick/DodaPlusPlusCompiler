@@ -24,7 +24,7 @@ class DodaSymbolTable
 public:
     DodaSymbolTable()
     {
-        cout << "constructor herer" << endl;
+      
         SymbolTable["block0"].parent = "Global";
         currentBlock = "block0";
         // addBlock();
@@ -37,36 +37,36 @@ public:
     bool funcFlag = false; // flag for function
     bool forFlag = false;  // flag fotr loop
     vector<record> funcRecords;
+    bool idenExp = false;
+    string secondidentifier;
 
     void addBlock()
     {
-        cout << "add block bla bla bla  " << endl;
+
         blockNode b;
         b.parent = currentBlock;
         blocksNum++;
-        cout << "add block bla bla   " << endl;
+        vector<string> assOp;
+
         SymbolTable["block" + to_string(blocksNum)] = b;
-        cout << "add block bla   " << endl;
-         vector<string> childreen ;
+
+        vector<string> childreen;
         childreen = SymbolTable[currentBlock].childs;
         string blockName = "block" + to_string(blocksNum);
         childreen.push_back(blockName);
         // SymbolTable[currentBlock].childs.push_back("block" + to_string(blocksNum)); //add child to parent
-       currentBlock = "block" + to_string(blocksNum);                              // from parent to child
+        currentBlock = "block" + to_string(blocksNum); // from parent to child
         if (funcFlag)
         {
             addRecordFunc();
             funcFlag = false;
         }
 
-        if(forFlag)
+        if (forFlag)
         {
-            forFlag =  false;
+            forFlag = false;
             addRecord();
         }
-
-        cout << "leave function    " << endl;
-
     }
     void closeBlock()
     {
@@ -75,10 +75,7 @@ public:
     }
     void addRecord()
     {
-        cout << "Type " << currentRecord.type << endl;
-        cout << "name " << currentRecord.name << endl;
-        cout << "Kind  " << currentRecord.kind << endl;
-
+        checkDuplication();
 
         if (!forFlag)
         {
@@ -111,9 +108,10 @@ public:
         cout << "**************************************************\n";
     }
 
-    void dummyPrint()
+    void dummyPrint(string s)
     {
-        cout<< "dummy print fuck you man heheheheheheh"<<endl;
+        cout << "dummy print fuck you man heheheheheheh" << endl;
+        cout << s << endl;
     }
 
     void printBlock(blockNode b)
@@ -134,9 +132,95 @@ public:
         cout << "---------------------------------------------------------\n";
     }
 
+    /*
+        Semantics functions
+    */
+    bool checkDuplication()
+    {
+        for (auto var : SymbolTable[currentBlock].records)
+        {
+            if (var.name == currentRecord.name)
+            {
+                // printf(stdout,"\t conflicting declaration ; near line %d\n",yylineno); yyerrok;
+                cout << "\t conflicting declaration between " + var.type + " " + var.name + " && " + currentRecord.type + " " + currentRecord.name << endl;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool checkIdentifier(string identifier)
+    {
+      
+        blockNode b = SymbolTable[currentBlock];
+        bool found = false;
+        int c = 0;
+        while (true)
+        {
+
+            for (auto var : b.records)
+            {
+                if (var.name == identifier)
+                {
+
+                    found = true;
+                }
+            }
+            if (found || b.parent == "Global")
+            {
+                break;
+            }
+
+            b = SymbolTable[b.parent];
+        }
+        if (!found)
+        {
+            cout << "\t'" << identifier << "'"
+                 << " was not declared in this scope" << endl;
+        }
+
+        return found;
+    }
+
+    bool checkIdentifiersType(string iden1, string iden2)
+    {
+        if (getIdenType(iden1) == getIdenType(iden2))
+            return true;
+        cout<<" error: cannot convert ‘std::string {aka std::basic_string}’ to ‘int’ in assignment"<<endl;
+        return false;
+    }
+
+    string getIdenType(string identifier)
+    {
+        string type = "" ;
+        blockNode b = SymbolTable[currentBlock];
+        int c = 0;
+        while (true)
+        {
+
+            for (auto var : b.records)
+            {
+                if (var.name == identifier)
+                {
+
+                    type = var.type;
+                    break;
+                }
+            }
+            if(type != "")
+            {
+                break;
+            }
+          
+            b = SymbolTable[b.parent];
+        }
+        return type;
+      
+    }
+
     ~DodaSymbolTable()
     {
         closeBlock();
-        printTable();
+        // printTable();
     }
 };

@@ -109,6 +109,7 @@ extern int yylineno;
 %nonassoc ELSE
 //%start program 
 
+
 %%
 
 program:  program statments         { ex($2);  } 
@@ -116,24 +117,24 @@ program:  program statments         { ex($2);  }
         ;
 
 statments: 
-          statments statment       { $$ = opr(';',2,$1,$2); printf("Statment statments \n");}
-        | statment                 { $$ = $1; printf("statement\n"); }       
-        |  statments block_statment { $$ = opr(';',2,$1,$2); printf("statement block statment\n"); printf("statement block_statment\n");}
-        |  block_statment           {  $$ = $1;printf("block statment \n");}
+          statments statment       { $$ = opr(';',2,$1,$2); }
+        | statment                 { $$ = $1;}       
+        |  statments block_statment { $$ = opr(';',2,$1,$2);}
+        |  block_statment           {  $$ = $1;}
         ;
 
-block_statment:  {symbolTable.addBlock();}'{' statments '}'  { $$ = $3; symbolTable.closeBlock(); printf("block_statment **** trace\n");; } 
+block_statment:  {symbolTable.addBlock();}'{' statments '}'  { $$ = $3; symbolTable.closeBlock(); } 
                     ;
 
 statment:   ';' {$$ = opr(';',2,NULL,NULL);}
         |   while_statment {$$ = $1; }
-        |   if_statment    {$$ = $1; printf("if_statment **** trace\n");}
+        |   if_statment    {$$ = $1; }
         |   for_statment   {$$ = $1;}
         |   do_while_statment ';' {$$ = $1;}
         |   switch_statment  {$$ = $1;}
         |   func_defintion_statment  {$$ = $1;}
-        |   var_declare_statment ';' {$$ = $1; symbolTable.addRecord();}
-        |   expression_statment ';' {$$ = $1; printf("expression_statment **** trace\n");} 
+        |   var_declare_statment ';' {$$ = $1; symbolTable.addRecord(); }
+        |   expression_statment ';' {$$ = $1; } 
         |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
         |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
         |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; } 
@@ -147,20 +148,20 @@ if_statment: matched_if  { $$ = $1; }
            ;
 
 
-matched_if: IF '(' expression_statment ')' block_statment ELSE block_statment %prec ifpred  {$$=opr(IF,3, $3, $5, $7); printf("matched if with block \n"); }
+matched_if: IF '(' expression_statment ')' block_statment ELSE block_statment %prec ifpred  {$$=opr(IF,3, $3, $5, $7); }
         ;
 
-//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE block_statment   {$$=opr(IF,3, $3, $6, $9); printf("matched if\n"); }
+//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE block_statment   {$$=opr(IF,3, $3, $6, $9);  }
         ;
 
-unmatched_if: IF '(' expression_statment ')' block_statment                         {$$=opr(IF,2,$3,$5); printf("un_matched if\n");}
+unmatched_if: IF '(' expression_statment ')' block_statment                         {$$=opr(IF,2,$3,$5);}
         ;
 
-//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE '{' statments '}' %prec ifpred {$$=opr(IF,3,$3,$6,$10); printf("matched if\n"); }
+//matched_if: IF '(' expression_statment ')' '{' statments '}' ELSE '{' statments '}' %prec ifpred {$$=opr(IF,3,$3,$6,$10); }
 //          ;
 
-//unmatched_if: IF '(' expression_statment ')' '{' statments '}' {$$=opr(IF,2,$3,$6); printf("un_matched if\n");}
-//            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {$$ = opr(IF,3,$3,$6,$10); printf("un_matched if two\n"); }
+//unmatched_if: IF '(' expression_statment ')' '{' statments '}' {$$=opr(IF,2,$3,$6);}
+//            | IF '(' expression_statment ')' '{' matched_if '}' ELSE '{' unmatched_if '}' {$$ = opr(IF,3,$3,$6,$10); }
 //            ;
 
 for_statment: FOR '(' for_begining ';' expression_statment ';' expression_statment ')' block_statment {$$ = opr(FOR,4,$3,$5,$7,$9);}
@@ -208,13 +209,12 @@ data_type: INT {$$ = $1;symbolTable.currentRecord.type = "int";}
          ;
 func_def_arguments: {$$ = opr(';',2,NULL,NULL);}
              | data_type Identifiers {$$ = arg($2);
-             printf("inside func def arguments case 1 \n");
              symbolTable.currentRecord.name = $2;
              symbolTable.currentRecord.kind = "par";
              symbolTable.funcFlag = true;
              symbolTable.addToFunc();}
              | func_def_arguments ',' data_type Identifiers {$$ = opr(';',2,$1,arg($4));
-              printf("inside func def arguments case 2 \n");
+        
              symbolTable.currentRecord.name = $4;
              symbolTable.currentRecord.kind = "par";
              symbolTable.funcFlag = true;
@@ -246,12 +246,12 @@ value: intType {$$ = con($1);}
      ;
 
 expression_statment: '(' expression_statment ')'  {$$ = $2;} 
-                    | Identifiers {$$ =id($1); printf("Identifiers **** trace\n");}
+                    | Identifiers {$$ =id($1);symbolTable.checkIdentifier($1);}
                     | value { $$ = $1; }
                     | func_call_statment { $$ = $1; }
-                    | expression_statment_lv0 {$$ = $1; printf("expression lvo **** trace\n");}
+                    | expression_statment_lv0 {$$ = $1;}
                     ;             
-expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); printf("$identifire = expression_statment $\n"); }
+expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); symbolTable.checkIdentifier($1);}
                    | expression_statment '+' expression_statment {$$ = opr('+',2,$1,$3); } 
                    
                    | expression_statment '-' expression_statment {$$ = opr('-',2,$1,$3);}
