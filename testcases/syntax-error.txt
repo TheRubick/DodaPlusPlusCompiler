@@ -1,4 +1,4 @@
-void main()
+func void main()
 {
   int 2s = 10;
 }
