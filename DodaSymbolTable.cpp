@@ -24,7 +24,7 @@ class DodaSymbolTable
 public:
     DodaSymbolTable()
     {
-      
+
         SymbolTable["block0"].parent = "Global";
         currentBlock = "block0";
         // addBlock();
@@ -39,6 +39,7 @@ public:
     vector<record> funcRecords;
     bool idenExp = false;
     string secondidentifier;
+    vector<string> matches;
 
     void addBlock()
     {
@@ -85,15 +86,22 @@ public:
 
     void addRecordFunc()
     {
-        cout << "length = " << funcRecords.size() << endl;
+      
         for (auto funcRecord : funcRecords)
             SymbolTable[currentBlock].records.push_back(funcRecord);
         funcRecords.clear();
     }
 
+    void addMatches(string s)
+    {
+
+        matches.push_back(s);
+       
+    }
+
     void addToFunc()
     {
-        cout << "current record ........." << currentRecord.name << endl;
+        // cout << "current record ........." << currentRecord.name << endl;
         funcRecords.push_back(currentRecord);
     }
     void printTable()
@@ -108,12 +116,7 @@ public:
         cout << "**************************************************\n";
     }
 
-    void dummyPrint(string s)
-    {
-        cout << "dummy print fuck you man heheheheheheh" << endl;
-        cout << s << endl;
-    }
-
+  
     void printBlock(blockNode b)
     {
 
@@ -149,9 +152,13 @@ public:
         return false;
     }
 
-    bool checkIdentifier(string identifier)
+    void checkIdentifier(string identifier, int line)
     {
-      
+         if (forFlag && currentRecord.name == identifier)
+        {
+            return;
+        }
+
         blockNode b = SymbolTable[currentBlock];
         bool found = false;
         int c = 0;
@@ -175,24 +182,53 @@ public:
         }
         if (!found)
         {
-            cout << "\t'" << identifier << "'"
-                 << " was not declared in this scope" << endl;
+            cout << "\t' error  " << identifier << "'"
+                 << " was not declared in this scope near line" << to_string(line) << endl;
         }
 
-        return found;
+        // cout << identifier << " close  identifer" << endl;
     }
 
-    bool checkIdentifiersType(string iden1, string iden2)
+    void checkIdentifiersType(int line)
     {
-        if (getIdenType(iden1) == getIdenType(iden2))
-            return true;
-        cout<<" error: cannot convert ‘std::string {aka std::basic_string}’ to ‘int’ in assignment"<<endl;
-        return false;
+        
+        if (matches.size() < 2)
+        {
+            matches.clear();
+            return;
+        }
+        //  cout<<"here3"<<endl;
+        bool result = false;
+        // cout <<  matches[0] << "  " << matches[1] << " match one and two"<<endl;
+        if (matches[0] == "" || matches[1] == "")
+        {
+            matches[0] = "";
+            matches[1] = "";
+            return;
+        }
+        // cout<<"here4"<<endl;
+        string type1 = getIdenType(matches[0]);
+        string type2 = getIdenType(matches[1]);
+       
+        if (type1 == type2)
+        {
+
+            result = true;
+        }
+        else
+        {
+            cout << " error: type mismatch " << type1 << " " << matches[0] << " && " << type2 << " " << matches[1] << " near line " << to_string(line) << endl;
+            result = false;
+        }
+
+        matches.clear();
+       
     }
 
     string getIdenType(string identifier)
     {
-        string type = "" ;
+       
+        string type = "";
         blockNode b = SymbolTable[currentBlock];
         int c = 0;
         while (true)
@@ -207,20 +243,30 @@ public:
                     break;
                 }
             }
-            if(type != "")
+          
+            if (type != "" || b.parent == "Global")
             {
                 break;
             }
-          
+
             b = SymbolTable[b.parent];
         }
+         if (forFlag && currentRecord.name == identifier)
+        {
+            
+            
+            return currentRecord.type;
+        }
+        
         return type;
-      
+
+        
     }
 
     ~DodaSymbolTable()
     {
+
         closeBlock();
-        // printTable();
+        printTable();
     }
 };

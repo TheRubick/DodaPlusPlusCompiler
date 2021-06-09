@@ -246,17 +246,17 @@ value: intType {$$ = con($1);}
      ;
 
 expression_statment: '(' expression_statment ')'  {$$ = $2;} 
-                    | Identifiers {$$ =id($1);symbolTable.checkIdentifier($1);}
+                    | Identifiers {$$ =id($1);symbolTable.checkIdentifier($1,yylineno); symbolTable.addMatches($1) ; }
                     | value { $$ = $1; }
                     | func_call_statment { $$ = $1; }
-                    | expression_statment_lv0 {$$ = $1;}
+                    | expression_statment_lv0 {$$ = $1;  }
                     ;             
-expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); symbolTable.checkIdentifier($1);}
-                   | expression_statment '+' expression_statment {$$ = opr('+',2,$1,$3); } 
+expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg($1),$3); symbolTable.checkIdentifier($1,yylineno) ; symbolTable.addMatches($1); symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment '+' expression_statment {$$ = opr('+',2,$1,$3); symbolTable.checkIdentifiersType(yylineno); } 
                    
-                   | expression_statment '-' expression_statment {$$ = opr('-',2,$1,$3);}
+                   | expression_statment '-' expression_statment {$$ = opr('-',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
                    | expression_statment '*' expression_statment {$$ = opr('*',2,$1,$3);}
-                   | expression_statment '/' expression_statment {$$ = opr('/',2,$1,$3);}
+                   | expression_statment '/' expression_statment {$$ = opr('/',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
                    | expression_statment '%' expression_statment {$$ = opr('%',2,$1,$3);}
                    | expression_statment '^' expression_statment {$$ = opr('^',2,$1,$3);}
                    | expression_statment AND expression_statment {$$ = opr(AND,2,$1,$3);}

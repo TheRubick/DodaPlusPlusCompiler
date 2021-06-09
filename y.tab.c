@@ -2003,7 +2003,7 @@ yyreduce:
 
   case 64:
 #line 249 "syntaxAnalyzer.y"
-                                  {(yyval.nPtr) =id((yyvsp[0].realStringVal));symbolTable.checkIdentifier((yyvsp[0].realStringVal));}
+                                  {(yyval.nPtr) =id((yyvsp[0].realStringVal));symbolTable.checkIdentifier((yyvsp[0].realStringVal),yylineno); symbolTable.addMatches((yyvsp[0].realStringVal)) ; }
 #line 2008 "y.tab.c"
     break;
 
@@ -2021,25 +2021,25 @@ yyreduce:
 
   case 67:
 #line 252 "syntaxAnalyzer.y"
-                                              {(yyval.nPtr) = (yyvsp[0].nPtr);}
+                                              {(yyval.nPtr) = (yyvsp[0].nPtr);  }
 #line 2026 "y.tab.c"
     break;
 
   case 68:
 #line 254 "syntaxAnalyzer.y"
-                                                             {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr)); symbolTable.checkIdentifier((yyvsp[-2].realStringVal));}
+                                                             {(yyval.nPtr) = opr('=',2,arg((yyvsp[-2].realStringVal)),(yyvsp[0].nPtr)); symbolTable.checkIdentifier((yyvsp[-2].realStringVal),yylineno) ; symbolTable.addMatches((yyvsp[-2].realStringVal)); symbolTable.checkIdentifiersType(yylineno);}
 #line 2032 "y.tab.c"
     break;
 
   case 69:
 #line 255 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('+',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr)); }
+                                                                 {(yyval.nPtr) = opr('+',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr)); symbolTable.checkIdentifiersType(yylineno); }
 #line 2038 "y.tab.c"
     break;
 
   case 70:
 #line 257 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('-',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr('-',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2044 "y.tab.c"
     break;
 
@@ -2051,7 +2051,7 @@ yyreduce:
 
   case 72:
 #line 259 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('/',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr('/',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2056 "y.tab.c"
     break;
 
