@@ -8,14 +8,19 @@ def printText():
     print(test)
     testCase = open("testCase.txt","w")
     testCase.write(test)
-    os.system("./a.out < ./testCase.txt | grep -i error")
-    result = subprocess.getoutput('./a.out < ./testCase.txt | grep -i error')
-    result = subprocess.check_output("./a.out < ./testCase.txt",stderr=subprocess.STDOUT,shell=True)
+    testCase.close()
+
+    #os.system("./a.out < ./testCase.txt")
+    result = subprocess.getoutput('./a.out < ./testCase.txt | grep "error !!"')
+    #result = subprocess.check_output("./a.out < ./testCase.txt",stderr=subprocess.STDOUT,shell=True)
+    
+    
+    print("result------------------------------------------------------")
     print(result)
     os.system("rm testCase.txt")
-    print("result")
+    
     print(result)
-    if result == "":
+    if result.find("error") == -1:
         result = "Compiled succcessfully"
         consoleWindow.config(text=result,fg="green")
     else:

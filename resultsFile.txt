@@ -1,0 +1,15 @@
+PROC main
+	push	25
+pop gg
+push_char "
+pop t
+ENDP main
+Symbol Table **************************************************
+blocksnum : 0
+block0
+parent : Global
+printing the records
+gg int Var
+t char Var
+printing the childs
+---------------------------------------------------------

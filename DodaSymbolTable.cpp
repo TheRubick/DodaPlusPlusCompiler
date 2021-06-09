@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <fstream>
+#include<stdio.h>
 using namespace std;
 
 struct record
@@ -24,6 +26,7 @@ class DodaSymbolTable
 public:
     DodaSymbolTable()
     {
+        remove("resultsFile.txt");
         cout << "constructor herer" << endl;
         SymbolTable["block0"].parent = "Global";
         currentBlock = "block0";
@@ -39,6 +42,13 @@ public:
     bool idenExp = false;
     string secondidentifier;
     vector<record> funcRecords;
+    ofstream resultsFile;
+    /*
+        error handling
+    */
+    vector<int> errorType;
+    vector<int> errorLine;
+    enum errorEnumTypes{semiColon,paranthesis,curlyBrace,duplication,unusedIdentifier,typeViolation};
 
     void addBlock()
     {
@@ -136,36 +146,79 @@ public:
     }
     void printTable()
     {
-        cout << "Symbol Table **************************************************\n";
-        cout << "blocksnum : " << blocksNum << endl;
+        resultsFile.open("resultsFile.txt",std::ios_base::app);
+        resultsFile << "Symbol Table **************************************************\n";
+        resultsFile << "blocksnum : " << blocksNum << endl;
         for (auto x : SymbolTable)
         {
-            cout << x.first << endl;
+            resultsFile << x.first << endl;
             printBlock(x.second);
         }
         cout << "**************************************************\n";
+        resultsFile.close();
     }
     void printBlock(blockNode b)
     {
 
         string parent;
-        cout << "parent : " << b.parent << endl;
-        cout << "printing the records" << endl;
+        resultsFile << "parent : " << b.parent << endl;
+        resultsFile << "printing the records" << endl;
         for (auto record : b.records)
         {
-            cout << record.name << " " << record.type << " " << record.kind << endl;
+            resultsFile << record.name << " " << record.type << " " << record.kind << endl;
         }
-        cout << "printing the childs" << endl;
+        resultsFile << "printing the childs" << endl;
         for (auto child : b.childs)
         {
-            cout << child << endl;
+            resultsFile << child << endl;
         }
-        cout << "---------------------------------------------------------\n";
+        resultsFile << "---------------------------------------------------------\n";
     }
 
+    void addError(int errorkind,int lineNum)
+    {
+        errorType.push_back(errorkind);
+        errorLine.push_back(lineNum);
+    }
+
+    void printError(int errorKind,int lineNum)
+    {
+        switch (errorKind)
+        {
+        case semiColon:
+            cout << "error !! near ; near line " << lineNum << endl;
+            break;
+        case paranthesis:
+            cout << "error !! near ) near line " << lineNum << endl;
+            break;
+        case curlyBrace:
+            cout << "error !! near } near line " << lineNum << endl;
+            break;
+        case duplication:
+            cout << "error !! variable duplication near line " << lineNum << endl;
+            break;
+        case unusedIdentifier:
+            cout << "error !! undeclared variable near line " << lineNum << endl;
+            break;
+        case typeViolation:
+            cout << "error !! type violation near line " << lineNum << endl; 
+            break;
+        default:
+            break;
+        }
+    }
+    void checkErrors()
+    {
+        for(int i = 0;i < errorType.size();i++)
+        {
+            printError(errorType[i],errorLine[i]);
+        }
+    }
     ~DodaSymbolTable()
     {
         closeBlock();
+        resultsFile << "-----------------------------------------------------------------------------\n";
         printTable();
+        checkErrors();
     }
 };

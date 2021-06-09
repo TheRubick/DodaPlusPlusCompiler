@@ -128,9 +128,9 @@ statment:   ';' {$$ = opr(';',2,NULL,NULL);}
         |   var_declare_statment ';' {$$ = $1; 
             if(!symbolTable.checkDuplication()) symbolTable.addRecord(); else fprintf(stdout,"semantics error!! duplicate declaration in line %d\n",yylineno); yyerrok;}
         |   expression_statment ';' {$$ = $1;} 
-        |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; }
-        |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; }
-        |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; }    
+        |   error ';'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near ; near line %d\n",yylineno); yyerrok; symbolTable.addError(0,yylineno);}
+        |   error ')'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near )  near line %d\n",yylineno); yyerrok; symbolTable.addError(1,yylineno);}
+        |   error '}'                   { $$ =opr(';',2,NULL,NULL); fprintf(stdout,"\t error near } near line %d\n",yylineno); yyerrok; symbolTable.addError(2,yylineno);}    
         ;
 
 while_statment: WHILE '(' expression_statment ')' block_statment  {$$ = opr(WHILE,2,$3,$5);}
@@ -151,7 +151,13 @@ for_statment: FOR '(' for_begining ';' expression_statment ';' expression_statme
             ;
 for_begining: expression_statment {$$=$1;}
             | var_declare_statment {$$=$1;
-            if(!symbolTable.checkDuplication()) symbolTable.addRecord(); else fprintf(stdout,"semantics error!! duplicate declaration in line %d\n",yylineno); yyerrok;}
+            if(!symbolTable.checkDuplication()) symbolTable.addRecord(); 
+            else 
+            {
+                symbolTable.addError(3,yylineno);
+                fprintf(stdout,"semantics error!! duplicate declaration in line %d\n",yylineno); yyerrok;
+            }
+            }
             ;
 
 do_while_statment: DO block_statment WHILE '(' expression_statment ')' {$$ = opr(DO,2,$2,$5);}
