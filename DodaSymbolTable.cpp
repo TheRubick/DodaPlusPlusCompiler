@@ -36,6 +36,8 @@ public:
     record currentRecord;
     bool funcFlag = false; // flag for function
     bool forFlag = false;  // flag fotr loop
+    bool idenExp = false;
+    string secondidentifier;
     vector<record> funcRecords;
 
     void addBlock()
@@ -71,12 +73,53 @@ public:
         cout << "Kind  " << currentRecord.kind << endl;
 
         cout << "add record bla bla bla  " << endl;
+        /*
+            check if this record exist or not
+        */
+        
+        SymbolTable[currentBlock].records.push_back(currentRecord);
+    }
 
-        if (!forFlag)
+    bool checkDuplication()
+    {
+        for(auto var : SymbolTable[currentBlock].records)
         {
-            SymbolTable[currentBlock].records.push_back(currentRecord);
+            if(var.name == currentRecord.name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool checkIdentifier(string identifier)
+    {
+        for(auto var : SymbolTable[currentBlock].records)
+        {
+            if(var.name == identifier)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool checkIdentifiersType(string iden1,string iden2)
+    {
+        if(getIdenType(iden1) == getIdenType(iden2))
+            return true;
+        return false;
+    }
+
+    string getIdenType(string identifier)
+    {
+        for(auto var : SymbolTable[currentBlock].records)
+        {
+            if(var.name == identifier)
+                return var.type;
         }
     }
+
 
     void addRecordFunc()
     {

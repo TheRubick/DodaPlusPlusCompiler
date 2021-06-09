@@ -44,15 +44,13 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 48 "syntaxAnalyzer.y"
+#line 32 "syntaxAnalyzer.y"
  
      #include "./Doda.h" 
-     #define YYDEBUG 1 // This is new
-
      
      
 
-#line 56 "y.tab.h"
+#line 54 "y.tab.h"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -131,7 +129,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 55 "syntaxAnalyzer.y"
+#line 37 "syntaxAnalyzer.y"
 
     int intVal;
     float floatVal;
@@ -140,7 +138,7 @@ union YYSTYPE
     char* realStringVal;
     nodeType *nPtr;             /* node pointer */
 
-#line 144 "y.tab.h"
+#line 142 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

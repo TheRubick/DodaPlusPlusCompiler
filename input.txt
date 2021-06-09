@@ -1,25 +1,6 @@
-func void main ()
-
+func void main()
 {
-
- int x = 10;
- int b;
-if (10  == x)
-{
-  b = 10;
-}
-else
-{
-  if( 5 == x)
-  {
-     b = 5;
-  }
-  else{
-    
-     int h = 7;
-     b = x ;
-  }
-  
- 
-} 
+  int x;
+  char a;
+  x = a;
 }
