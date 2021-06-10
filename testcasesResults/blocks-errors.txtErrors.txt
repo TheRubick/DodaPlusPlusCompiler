@@ -1,0 +1,2 @@
+                      	' error  y' was not declared in this scope near line7
+ error: type mismatch  y && int x near line 7

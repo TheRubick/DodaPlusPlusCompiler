@@ -2045,7 +2045,7 @@ yyreduce:
 
   case 71:
 #line 258 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('*',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr('*',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2050 "y.tab.c"
     break;
 
@@ -2057,61 +2057,61 @@ yyreduce:
 
   case 73:
 #line 260 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('%',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr('%',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2062 "y.tab.c"
     break;
 
   case 74:
 #line 261 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr('^',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr('^',2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2068 "y.tab.c"
     break;
 
   case 75:
 #line 262 "syntaxAnalyzer.y"
-                                                                 {(yyval.nPtr) = opr(AND,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                 {(yyval.nPtr) = opr(AND,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2074 "y.tab.c"
     break;
 
   case 76:
 #line 263 "syntaxAnalyzer.y"
-                                                                {(yyval.nPtr) = opr(OR,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                {(yyval.nPtr) = opr(OR,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2080 "y.tab.c"
     break;
 
   case 77:
 #line 264 "syntaxAnalyzer.y"
-                                                                          {(yyval.nPtr) = opr(GREATER_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                          {(yyval.nPtr) = opr(GREATER_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2086 "y.tab.c"
     break;
 
   case 78:
 #line 265 "syntaxAnalyzer.y"
-                                                                           {(yyval.nPtr) = opr(GREATER_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                           {(yyval.nPtr) = opr(GREATER_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2092 "y.tab.c"
     break;
 
   case 79:
 #line 266 "syntaxAnalyzer.y"
-                                                                       {(yyval.nPtr) = opr(LESS_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                       {(yyval.nPtr) = opr(LESS_THAN,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2098 "y.tab.c"
     break;
 
   case 80:
 #line 267 "syntaxAnalyzer.y"
-                                                                        {(yyval.nPtr) = opr(LESS_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                        {(yyval.nPtr) = opr(LESS_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2104 "y.tab.c"
     break;
 
   case 81:
 #line 268 "syntaxAnalyzer.y"
-                                                                   {(yyval.nPtr) = opr(EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                   {(yyval.nPtr) = opr(EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2110 "y.tab.c"
     break;
 
   case 82:
 #line 269 "syntaxAnalyzer.y"
-                                                                       {(yyval.nPtr) = opr(NOT_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));}
+                                                                       {(yyval.nPtr) = opr(NOT_EQUAL,2,(yyvsp[-2].nPtr),(yyvsp[0].nPtr));symbolTable.checkIdentifiersType(yylineno);}
 #line 2116 "y.tab.c"
     break;
 
