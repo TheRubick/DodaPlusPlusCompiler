@@ -255,18 +255,18 @@ expression_statment_lv0: Identifiers '=' expression_statment {$$ = opr('=',2,arg
                    | expression_statment '+' expression_statment {$$ = opr('+',2,$1,$3); symbolTable.checkIdentifiersType(yylineno); } 
                    
                    | expression_statment '-' expression_statment {$$ = opr('-',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
-                   | expression_statment '*' expression_statment {$$ = opr('*',2,$1,$3);}
+                   | expression_statment '*' expression_statment {$$ = opr('*',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
                    | expression_statment '/' expression_statment {$$ = opr('/',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
-                   | expression_statment '%' expression_statment {$$ = opr('%',2,$1,$3);}
-                   | expression_statment '^' expression_statment {$$ = opr('^',2,$1,$3);}
-                   | expression_statment AND expression_statment {$$ = opr(AND,2,$1,$3);}
-                   | expression_statment OR expression_statment {$$ = opr(OR,2,$1,$3);}
-                   | expression_statment GREATER_THAN expression_statment {$$ = opr(GREATER_THAN,2,$1,$3);}
-                   | expression_statment GREATER_EQUAL expression_statment {$$ = opr(GREATER_EQUAL,2,$1,$3);}
-                   | expression_statment LESS_THAN expression_statment {$$ = opr(LESS_THAN,2,$1,$3);}
-                   | expression_statment LESS_EQUAL expression_statment {$$ = opr(LESS_EQUAL,2,$1,$3);}
-                   | expression_statment EQUAL expression_statment {$$ = opr(EQUAL,2,$1,$3);}
-                   | expression_statment NOT_EQUAL expression_statment {$$ = opr(NOT_EQUAL,2,$1,$3);}
+                   | expression_statment '%' expression_statment {$$ = opr('%',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment '^' expression_statment {$$ = opr('^',2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment AND expression_statment {$$ = opr(AND,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment OR expression_statment {$$ = opr(OR,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment GREATER_THAN expression_statment {$$ = opr(GREATER_THAN,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment GREATER_EQUAL expression_statment {$$ = opr(GREATER_EQUAL,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment LESS_THAN expression_statment {$$ = opr(LESS_THAN,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment LESS_EQUAL expression_statment {$$ = opr(LESS_EQUAL,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment EQUAL expression_statment {$$ = opr(EQUAL,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
+                   | expression_statment NOT_EQUAL expression_statment {$$ = opr(NOT_EQUAL,2,$1,$3);symbolTable.checkIdentifiersType(yylineno);}
                    | NOT expression_statment {$$ = opr(NOT,1,$2);}
                    ;
 %%
