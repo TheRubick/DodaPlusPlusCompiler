@@ -259,10 +259,8 @@ public:
 
             b = SymbolTable[b.parent];
         }
-         if (forFlag && currentRecord.name == identifier)
+        if (forFlag && currentRecord.name == identifier)
         {
-            
-            
             return currentRecord.type;
         }
         
