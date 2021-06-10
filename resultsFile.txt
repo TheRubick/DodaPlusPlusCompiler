@@ -1,9 +1,4 @@
 PROC main
-<<<<<<< HEAD
-=======
-push a
-pop x
->>>>>>> fd10f51a4526eb020dfc226245a4a039b48a632a
 ENDP main
 Symbol Table **************************************************
 blocksnum : 1
