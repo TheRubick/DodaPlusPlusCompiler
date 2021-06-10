@@ -1,3 +1,5 @@
+PROC main
+ENDP main
 Symbol Table **************************************************
 blocksnum : 1
 block1
@@ -8,5 +10,6 @@ printing the childs
 block0
 parent : Global
 printing the records
+main void func
 printing the childs
 ---------------------------------------------------------
