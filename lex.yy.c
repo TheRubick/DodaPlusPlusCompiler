@@ -938,7 +938,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 17 "lexicalAnalyzer.l"
-{printf("Integeeer\n"); yylval.intVal = 0; return INT;}
+{ yylval.intVal = 0; return INT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -1104,7 +1104,7 @@ YY_RULE_SETUP
 case 35:
 YY_RULE_SETUP
 #line 59 "lexicalAnalyzer.l"
-{yylval.realStringVal = strdup(yytext);  return Identifiers;} // Identifiers
+{yylval.realStringVal = strdup(yytext); return Identifiers;} // Identifiers
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */

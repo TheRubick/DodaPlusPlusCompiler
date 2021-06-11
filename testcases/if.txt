@@ -1,4 +1,4 @@
-void main()
+func void main()
 {
   int x = 10;
   int b;

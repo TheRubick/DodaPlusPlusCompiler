@@ -1,0 +1,20 @@
+PROC main
+push a
+pop x
+ENDP main
+Symbol Table **************************************************
+blocksnum : 1
+block1
+parent : block0
+printing the records
+x int Var
+a char Var
+printing the childs
+---------------------------------------------------------
+block0
+parent : Global
+printing the records
+main void func
+printing the childs
+block1
+---------------------------------------------------------
