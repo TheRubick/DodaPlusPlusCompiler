@@ -2,13 +2,8 @@
 #include "Doda.h"
 #include "y.tab.h"
 #include <iostream>
-
+#include <fstream>
 using namespace std;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> gellesh
 
 static int lbl;
 static int lblSwitch;
@@ -22,14 +17,9 @@ int ex(nodeType *p)
     switch (p->type)
     {
     case typeCon:
-<<<<<<< HEAD
-        
-        printf("\tpush_int\t%d\n", p->con.value); 
-=======
 
         //printf("\tpush_int\t%d\n", p->con.value);
         resultsFile << "push_int " << p->con.value << endl;
->>>>>>> gellesh
         break;
     case typeArg:
         resultsFile << "pop " << p->arg.i << endl;
